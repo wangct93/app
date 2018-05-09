@@ -1,0 +1,44 @@
+@import "../../common/less/common";
+.shop-container{
+    .footer-btn-box{
+        text-align: center;
+        padding: 10px;
+    }
+}
+.shop-list{
+    overflow: auto;
+    padding:0 20px;
+    > li{
+        padding: 15px 0;
+        border-top: 1px solid @borderColor;
+        &:first-child{
+            border-top-width: 0;
+        }
+    }
+    .img-box{
+        width: 90px;
+        height: 90px;
+        img{
+            .fit();
+        }
+    }
+    .block{
+        display: flex;
+    }
+    .info-box{
+        flex: 1;
+        padding: 0 20px;
+    }
+    p{
+        line-height: 30px;
+    }
+    .shop-title{
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .shop-price{
+        color: red;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,31 @@
+@import "../common/less/common";
+
+.container{
+    background-color: @contanerColor;
+}
+.page-flex{
+    display: flex;
+    flex-direction: column;
+    .fit();
+    > .body{
+        flex: 1;
+        overflow: hidden;
+    }
+}
+
+.block{
+    display: block;
+}
+
+p{
+    margin: 0;
+}
+a,
+a:hover,
+a:active,
+a:visited,
+a:focus{
+    text-decoration: none;
+    outline: none;
+    color: inherit;
+}
