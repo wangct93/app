@@ -9,3 +9,10 @@ export let loadMoreList = (params) => {
         type:'loadMoreList'
     }
 };
+
+
+export let aaa = () => {
+    return {
+        type:'dd'
+    }
+}

@@ -5,6 +5,7 @@ import {dispatch} from '../store';
 import Home from '../../views/home';
 import City from '../../views/city';
 import List from '../../views/list';
+import Shop from '../../views/shop';
 let defaultState = {
     list:[
         {
@@ -18,6 +19,10 @@ let defaultState = {
         {
             path:'/list/:type',
             component:List
+        },
+        {
+            path:'/shop/:id',
+            component:Shop
         }
     ]
 };

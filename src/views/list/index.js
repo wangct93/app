@@ -27,7 +27,7 @@ class List extends Component{
                             data.map((item,i) => {
                                 let {id,src,distance,price,count,name,intro} = item;
                                 return <li key={i}>
-                                    <Link className="block" to={`/shop${id}`}>
+                                    <Link className="block" to={`/shop/${id}`}>
                                         <div className="img-box">
                                             <img src={src}/>
                                         </div>

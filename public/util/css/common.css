@@ -105,7 +105,9 @@ iframe{
 .v-mid{
     vertical-align:middle;
 }
-.v-mid-box:after{
+.v-mid-box:after,
+.mask-wrap:after,
+.img-box-auto:after{
     content: '';
     display: inline-block;
     width: 0;
@@ -143,6 +145,28 @@ hr{
 }
 
 /*↑↑↑↑↑↑↑↑↑↑↑↑↑初始化样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
+
+
+/******************************图片盒子*************************/
+.img-box-full > img{
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    max-width: none;
+    min-height: 0;
+    min-width: 0;
+}
+.img-box-auto{
+    text-align: center;
+}
+.img-box-auto > img{
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+/*↑↑↑↑↑↑↑↑↑↑↑↑↑图片盒子↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 
 /******************************重要结构***************************************/
 
@@ -252,10 +276,11 @@ hr{
 /*↑↑↑↑↑↑↑↑↑↑↑↑弹性布局↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 
 
-/***************************表单样式*******************************/
+/***************************表格样式*******************************/
 .info-table{
     width: 100%;
     table-layout: fixed;
+    border-collapse: collapse;
 }
 .info-table td{
     height: 30px;
@@ -279,52 +304,18 @@ hr{
     width: 100%;
     height: 60px;
 }
-.mutil-name{
+.multiple-name{
     vertical-align: top;
     line-height: 30px;
 }
-.mutil-value{
+.multiple-value{
     padding: 5px 0;
-    box-sizing: border-box;
+    min-height: 20px;
     line-height: 20px;
     white-space: normal;
 }
 
-/*↑↑↑↑↑↑↑↑↑↑↑↑表单样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
-
-/***************************列表table************************/
-.list-table{
-    table-layout: fixed;
-    border-collapse:collapse;
-    width: 100%;
-}
-.list-table-td{
-    height: 34px;
-    padding: 0 10px;
-    border-bottom: 1px solid #ccc;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.list-table-head .list-table-td{
-    font-weight: bold;
-    font-size: 14px;
-}
-.list-table-body .list-table-tr:hover{
-    background-color: #f1f1f1;
-}
-
-/*↑↑↑↑↑↑↑↑↑↑↑↑列表table↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
-
-/*************************item默认样式*****************************/
-.item-list{
-    padding: 10px 0 0 10px;
-}
-.item{
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 10px 10px 0;
-}
-/*↑↑↑↑↑↑↑↑↑↑↑↑item默认样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
+/*↑↑↑↑↑↑↑↑↑↑↑↑表格样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 
 /*************************下拉菜单*****************************/
 .combo-box{
@@ -646,37 +637,6 @@ hr{
 
 /*↑↑↑↑↑↑↑↑↑↑↑↑放大镜↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 
-
-/***************************tabs选项卡*******************************/
-.tab-box{
-    height: 40px;
-    line-height: 40px;
-    font-size: 0;
-    border-bottom: 1px solid #ccc;
-    padding-left: 15px;
-}
-.tab-item{
-    display: inline-block;
-    vertical-align: top;
-    height: 100%;
-    border: 1px solid #ccc;
-    margin:-1px -1px 0 0;
-    font-size: 12px;
-    padding: 0 20px;
-    cursor: pointer;
-}
-.tab-item:hover{
-    background-color: #f1f1f1;
-}
-.active.tab-item{
-    border-bottom-color: #fff;
-    background-color: #fff;
-    cursor: auto;
-}
-
-/*↑↑↑↑↑↑↑↑↑↑↑↑tabs选项卡↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
-
-
 /*****************************文字提示***********************/
 .text-tip{
     position: absolute;
@@ -787,109 +747,27 @@ hr{
 
 /*↑↑↑↑↑↑↑↑↑↑↑↑框选样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 
-/*****************************表格组件样式***********************/
-.w-datagrid-wrap{
-    border: 1px solid #ddd;
-    overflow: hidden;
-}
-
-.w-datagrid-header,
-.w-datagrid-body{
-    margin-right: -1px;
-}
-.w-datagrid-header{
-    border-bottom: 1px solid #ddd;
-}
-.w-datagrid-header > .fit{
-    overflow: hidden;
-}
-.w-datagrid-body{
-    overflow: auto;
-    margin-bottom: -1px;
-}
-.w-datagrid-table{
-    table-layout:fixed;
-    width: 100%;
-}
-.w-datagrid-table td{
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding:  0 4px;
-    box-sizing: border-box;
-}
-.w-datagrid-header td{
-    border-bottom-width: 0;
-}
-.w-datagrid-header td{
-    height: 34px;
-}
-.w-datagrid-body td{
-    height: 30px;
-}
-.w-datagrid-body thead td{
-    height: 0 ;
-    font-size: 0 ;
-    padding-top: 0 ;
-    padding-bottom: 0 ;
-    border-top-width: 0;
-    border-bottom-width: 0;
-}
-.paging-box.w-datagrid-paging{
-    text-align:right;
-    padding: 8px 0;
-    border-top: 1px solid #ddd;
-}
-
-.w-datagrid-paging > .paging-item,
-.w-datagrid-paging > .paging-btn{
-    height: 24px;
-    line-height: 24px;
-    margin-right:8px;
-}
-.w-datagrid-paging > .paging-item{
-    width: 24px;
-}
-
-/*↑↑↑↑↑↑↑↑↑↑↑↑表格组件样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
-
 /*****************************操作处理中文字样式***********************/
-.loading-wrap{
+.mask-wrap{
+    position: absolute;
     left: 0;
     top: 0;
+    width: 100%;
+    height: 100%;
     z-index: 100;
-    background-color: #fff;
+    background-color: rgba(0,0,0,.5);
 }
-.process-text{
-    position: relative;
+.mask-content{
     display: inline-block;
     vertical-align: middle;
     padding: 15px 10px 15px 50px;
     font-size: 12px;
     line-height: 20px;
     background:#fff url('../img/loading.gif') 10px center no-repeat;
-    z-index: 10;
 }
 /*↑↑↑↑↑↑↑↑↑↑↑↑操作处理中文字样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 
-
-/*******************************图标样式************************/
-.w-icon{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 16px;
-    height: 16px;
-}
-/*↑↑↑↑↑↑↑↑↑↑↑↑图标样式↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
-
 /*******************************其他************************/
-.item-text{
-    font-size: 12px;
-    line-height: 20px;
-    white-space:nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 .file-input{
     position: absolute;
     left: 0;
