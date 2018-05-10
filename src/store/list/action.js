@@ -11,8 +11,10 @@ export let loadMoreList = (params) => {
 };
 
 
-export let aaa = () => {
+export let shopping = (isPlus,data) => {
     return {
-        type:'dd'
+        type:'shoppingCart',
+        data,
+        isPlus
     }
-}
+};

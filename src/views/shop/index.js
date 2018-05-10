@@ -15,9 +15,10 @@ import Header from '../header';
 
 class Shop extends Component{
     render(){
-        let {currentData = {}} = this.props;
+        let {currentData = {},shopping,shoppingCartData = {}} = this.props;
         let {name,score,intro,averPrice,foodData = {}} = currentData;
         let foodList = this.formatFoodData(foodData);
+        let shoppingCart = shoppingCartData[currentData.id] || [];
         return <div className="page-flex shop-container">
             <Header>商户信息</Header>
             <div className="body">
@@ -45,10 +46,17 @@ class Shop extends Component{
                     <div className="tv-content">
                         {
                             foodList.map((item,i) => {
-                                return <TvBox key={i} data={item} />
+                                return <TvBox shoppingCart={shoppingCart} shopping={shopping} key={i} data={item} />
                             })
                         }
                     </div>
+                </div>
+                <div className="shop-footer">
+                    <div className="icon-box">
+                        <Icon type="shop"/>
+                    </div>
+                    <div>另需配送费￥4.5|支持到店自取</div>
+                    <div className="shop-price">￥20起送</div>
                 </div>
             </div>
         </div>
@@ -81,14 +89,16 @@ class Shop extends Component{
 
 class TvBox extends Component{
     render(){
-        let {data = {}} = this.props;
+        let {data = {},shopping,shoppingCart = []} = this.props;
         let {title,list} = data;
+        let filterData = shoppingCart.toFieldObject('id');
         return <div className="tv-box">
             <div className="tv-header">{title}</div>
             <ul className="tv-list">
                 {
                     list.map((item,i) => {
-                        let {name,intro} = item;
+                        let {name,intro,id} = item;
+                        let num = filterData[id] ? filterData[id].num : 0;
                         return <li key={i}>
                             <div className="img-box-full">
                                 <img src="img/1.jpg"/>
@@ -98,14 +108,27 @@ class TvBox extends Component{
                                 <p>{intro}</p>
                             </div>
                             <div className="tv-op-box">
-                                <Button shape="circle" icon="minus" size="small"/>
-                                <span className="tv-count">0</span>
-                                <Button shape="circle" icon="plus" size="small"/>
+                                {
+                                    num ? <React.Fragment>
+                                        <Button shape="circle" onClick={shopping.bind(this,false,item)} icon="minus" size="small"/>
+                                        <span className="tv-count">{num}</span>
+                                    </React.Fragment> : ''
+                                }
+
+                                <Button shape="circle" onClick={shopping.bind(this,true,item)} icon="plus" size="small"/>
                             </div>
                         </li>
                     })
                 }
             </ul>
+        </div>
+    }
+}
+
+class Shopping extends Component{
+    render(){
+        return <div>
+
         </div>
     }
 }

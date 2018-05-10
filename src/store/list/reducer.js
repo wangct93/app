@@ -70,11 +70,9 @@ let defaultState = {
             count:'300'
         }
     ],
-    shoppingCartData:[
-        {
-        }
-    ],
+    shoppingCartData:{},
     currentData:{
+        id:2,
         name:'天下第一',
         score:5,
         intro:'天下已第一文档',
@@ -174,7 +172,25 @@ let reducer = {
     loadMoreList(state,action){
         state.data = state.data.concat(state.data);
     },
-    dd(state,action){
-
+    shoppingCart(state,action){
+        let {data,isPlus = true} = action;
+        let {shoppingCartData = {},currentData = {}} = state;
+        let {id} = currentData;
+        let list = shoppingCartData[id];
+        if(!list){
+            shoppingCartData[id] = list = [];
+        }
+        let filterData = list.toFieldObject('id');
+        let target = filterData[data.id];
+        if(!target){
+            target = wt.clone(data);
+            list.push(target);
+            target.num = 0;
+        }
+        if(isPlus){
+            target.num++;
+        }else{
+            target.num = Math.max(target.num - 1,0);
+        }
     }
 };
