@@ -25,7 +25,9 @@ class Home extends Component{
                     <Icon type="down"/>
                 </Link>
                 <SearchBox />
-                <Icon type="user"/>
+                <Link to="/login">
+                    <Icon type="user"/>
+                </Link>
             </Header>
             <div className="body">
                 <MenuBox data={menuData}/>

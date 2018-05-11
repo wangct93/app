@@ -170,7 +170,17 @@ export let listData = (state = defaultState,action = {}) => {
 
 let reducer = {
     loadMoreList(state,action){
-        state.data = state.data.concat(state.data);
+        state.shopLoading = true;
+        setTimeout(() => {
+            dispatch({
+                type:'loadShopListEnd',
+                data:state.data.concat(state.data)
+            })
+        },2000);
+    },
+    loadShopListEnd(state,action){
+        state.data = action.data;
+        state.shopLoading = false;
     },
     shoppingCart(state,action){
         let {data,isPlus = true} = action;
@@ -191,6 +201,20 @@ let reducer = {
             target.num++;
         }else{
             target.num = Math.max(target.num - 1,0);
+            if(target.num === 0){
+                list.remove(target);
+            }
         }
+    },
+    updateShopViewData(state,action){
+        let {data} = action;
+        let {currentData} = state;
+        if(!currentData){
+            state.currentData = currentData = {};
+        }
+        wt.extend(currentData,data);
+    },
+    saveShopListScrollTop(state,action){
+        state.scrollTop = action.scrollTop;
     }
 };

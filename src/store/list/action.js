@@ -4,9 +4,16 @@
 
 
 
-export let loadMoreList = (params) => {
+export let loadMoreList = params => {
     return {
         type:'loadMoreList'
+    }
+};
+
+export let updateShop = data => {
+    return {
+        type:'updateShopViewData',
+        data
     }
 };
 
@@ -16,5 +23,12 @@ export let shopping = (isPlus,data) => {
         type:'shoppingCart',
         data,
         isPlus
+    }
+};
+
+export const saveScrollTop = scrollTop => {
+    return {
+        type:'saveShopListScrollTop',
+        scrollTop
     }
 };

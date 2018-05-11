@@ -51,13 +51,7 @@ class Shop extends Component{
                         }
                     </div>
                 </div>
-                <div className="shop-footer">
-                    <div className="icon-box">
-                        <Icon type="shop"/>
-                    </div>
-                    <div>另需配送费￥4.5|支持到店自取</div>
-                    <div className="shop-price">￥20起送</div>
-                </div>
+                <ShoppingFooter shoppingCart={shoppingCart}  shopping={shopping}/>
             </div>
         </div>
     }
@@ -125,11 +119,68 @@ class TvBox extends Component{
     }
 }
 
-class Shopping extends Component{
+class ShoppingFooter extends Component{
     render(){
-        return <div>
-
-        </div>
+        let {listHeight = 0} = this;
+        let {show} = this.state || {};
+        let {shoppingCart = [],shopping} = this.props;
+        return ReactDOM.createPortal(<div onClick={this.click.bind(this)} className={`shopping-cart-container ${show ? 'mask-wrap' : ''}`}>
+            <div className="shop-footer">
+                <div className="icon-box" onClick={this.showOrHide.bind(this)}>
+                    <Icon type="shop"/>
+                </div>
+                <div>另需配送费￥4.5|支持到店自取</div>
+                <div className="shop-price">￥20起送</div>
+            </div>
+            <div className="shopping-cart-view" style={{
+                height:show ? listHeight + 'px' : 0
+            }}>
+                <ul className="shoppping-list" ref="list">
+                    {
+                        shoppingCart.map((item,i) => {
+                            let {name,num} = item;
+                            return <li key={i}>
+                                <div className="food-name">{name}</div>
+                                <div className="shop-num-op">
+                                    <Button shape="circle" onClick={shopping.bind(this,false,item)} icon="minus" size="small"/>
+                                    <span className="tv-count">{num}</span>
+                                    <Button shape="circle" onClick={shopping.bind(this,true,item)} icon="plus" size="small"/>
+                                </div>
+                            </li>;
+                        })
+                    }
+                </ul>
+            </div>
+        </div>,this.elem)
+    }
+    componentWillMount(){
+        let div = document.createElement('div');
+        $('body').append(div);
+        this.elem = div;
+    }
+    componentDidMount(){
+        this.setListHeight();
+    }
+    componentDidUpdate(){
+        this.setListHeight();
+    }
+    componentWillUnmount(){
+        $(this.elem).remove();
+    }
+    showOrHide(){
+        let {show} = this.state || {};
+        this.setState({
+            show:!show
+        });
+    }
+    click(e){
+        if($(e.target).hasClass('shopping-cart-container')){
+            this.showOrHide();
+        }
+        // HashRouter.push('/dd');
+    }
+    setListHeight(){
+        this.listHeight = this.refs.list.offsetHeight;
     }
 }
 

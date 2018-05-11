@@ -26,23 +26,21 @@ class List extends Component{
                         {
                             data.map((item,i) => {
                                 let {id,src,distance,price,count,name,intro} = item;
-                                return <li key={i}>
-                                    <Link className="block" to={`/shop/${id}`}>
-                                        <div className="img-box">
-                                            <img src={src}/>
-                                        </div>
-                                        <div className="info-box">
-                                            <p>
-                                                <span className="shop-title">{name}</span>
-                                                <span className="fr">{distance}</span>
-                                            </p>
-                                            <p>{intro}</p>
-                                            <p>
-                                                <span className="shop-price">{price}</span>
-                                                <span className="fr">已售{count}</span>
-                                            </p>
-                                        </div>
-                                    </Link>
+                                return <li key={i} onClick={this.toShopDetail.bind(this,item)}>
+                                    <div className="img-box">
+                                        <img src={src}/>
+                                    </div>
+                                    <div className="info-box">
+                                        <p>
+                                            <span className="shop-title">{name}</span>
+                                            <span className="fr">{distance}</span>
+                                        </p>
+                                        <p>{intro}</p>
+                                        <p>
+                                            <span className="shop-price">{price}</span>
+                                            <span className="fr">已售{count}</span>
+                                        </p>
+                                    </div>
                                 </li>
                             })
                         }
@@ -56,13 +54,21 @@ class List extends Component{
     }
     componentDidMount(){
         let {scrollBox,footer} = this.refs;
+        let {loadMoreList,scrollTop = 0,shopLoading} = this.props;
         $(scrollBox).bind('scroll',e => {
             let boxBottom = $(e.target).getRect().bottom;
             let footerTop = $(footer).getRect().top;
-            if(footerTop < boxBottom){
-                this.props.loadMoreList();
+            if(footerTop < boxBottom && !shopLoading){
+                loadMoreList();
             }
         });
+        scrollBox.scrollTop = scrollTop;
+    }
+    toShopDetail(data){
+        let {props} = this;
+        props.updateShop(data);
+        props.saveScrollTop(this.refs.scrollBox.scrollTop);
+        location.hash = `/shop/${data.id}`;
     }
 }
 

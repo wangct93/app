@@ -4,6 +4,7 @@
     > .body{
         display: flex;
         flex-direction: column;
+        padding-bottom: 50px;
     }
     .shop-header{
         display: flex;
@@ -70,8 +71,19 @@
     .tv-count{
         margin: 0 10px;
     }
+
+}
+
+.shopping-cart-container{
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     .shop-footer{
         display: flex;
+        flex: 0 0 auto;
         height: 50px;
         background-color: #333;
         color: #eee;
@@ -94,5 +106,34 @@
             text-align: right;
             padding-right: 20px;
         }
+    }
+    &.mask-wrap{
+        .fit();
+    }
+    .shopping-cart-view{
+        transition:height .5s;
+        overflow: hidden;
+        flex: 0 0 auto;
+        background-color: #fff;
+    }
+    .shoppping-list{
+        > li{
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            .border-top();
+            &:first-child{
+                border-top-width: 0;
+            }
+        }
+    }
+    .food-name{
+        flex: 1;
+    }
+    .shop-num-op{
+
+    }
+    .tv-count{
+        margin: 0 10px;
     }
 }
