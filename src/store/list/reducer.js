@@ -70,10 +70,7 @@ let defaultState = {
             count:'300'
         }
     ],
-    shoppingCartData:[
-        {
-        }
-    ],
+    shoppingCartData:[],
     currentData:{
         name:'天下第一',
         score:5,
