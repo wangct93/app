@@ -32,3 +32,11 @@ export const saveScrollTop = scrollTop => {
         scrollTop
     }
 };
+
+
+export const getShopList = shopType => {
+    return {
+        type:'getShopList',
+        shopType
+    }
+};

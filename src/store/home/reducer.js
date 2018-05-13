@@ -7,18 +7,18 @@ let defaultState = {
         [
             {
                 iconCls:'code-o',
-                path:'/aa',
-                text:'测试1'
+                path:'/food',
+                text:'美食'
             },
             {
                 iconCls:'code-o',
-                path:'/aa',
-                text:'测试1'
+                path:'/cs',
+                text:'超市'
             },
             {
                 iconCls:'code-o',
-                path:'/aa',
-                text:'测试1'
+                path:'/fruit',
+                text:'生鲜果蔬'
             },
             {
                 iconCls:'code-o',

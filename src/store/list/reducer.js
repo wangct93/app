@@ -5,71 +5,71 @@ import {dispatch} from '../store';
 import Home from '../../views/home';
 import City from '../../views/city';
 let defaultState = {
-    data:[
-        {
-            id:1,
-            src:'img/1.jpg',
-            name:'参数2',
-            distance:'120m',
-            intro:'吃死你提示',
-            price:'￥150',
-            count:'300'
-        },
-        {
-            id:1,
-            src:'img/1.jpg',
-            name:'参数2',
-            distance:'120m',
-            intro:'吃死你提示',
-            price:'￥150',
-            count:'300'
-        },
-        {
-            id:1,
-            src:'img/1.jpg',
-            name:'参数2',
-            distance:'120m',
-            intro:'吃死你提示',
-            price:'￥150',
-            count:'300'
-        },
-        {
-            id:1,
-            src:'img/1.jpg',
-            name:'参数2',
-            distance:'120m',
-            intro:'吃死你提示',
-            price:'￥150',
-            count:'300'
-        },
-        {
-            id:1,
-            src:'img/1.jpg',
-            name:'参数2',
-            distance:'120m',
-            intro:'吃死你提示',
-            price:'￥150',
-            count:'300'
-        },
-        {
-            id:1,
-            src:'img/1.jpg',
-            name:'参数2',
-            distance:'120m',
-            intro:'吃死你提示',
-            price:'￥150',
-            count:'300'
-        },
-        {
-            id:1,
-            src:'img/1.jpg',
-            name:'参数2',
-            distance:'120m',
-            intro:'吃死你提示',
-            price:'￥150',
-            count:'300'
-        }
-    ],
+    // data:[
+    //     {
+    //         id:1,
+    //         src:'img/1.jpg',
+    //         name:'参数2',
+    //         distance:'120m',
+    //         intro:'吃死你提示',
+    //         price:'￥150',
+    //         count:'300'
+    //     },
+    //     {
+    //         id:1,
+    //         src:'img/1.jpg',
+    //         name:'参数2',
+    //         distance:'120m',
+    //         intro:'吃死你提示',
+    //         price:'￥150',
+    //         count:'300'
+    //     },
+    //     {
+    //         id:1,
+    //         src:'img/1.jpg',
+    //         name:'参数2',
+    //         distance:'120m',
+    //         intro:'吃死你提示',
+    //         price:'￥150',
+    //         count:'300'
+    //     },
+    //     {
+    //         id:1,
+    //         src:'img/1.jpg',
+    //         name:'参数2',
+    //         distance:'120m',
+    //         intro:'吃死你提示',
+    //         price:'￥150',
+    //         count:'300'
+    //     },
+    //     {
+    //         id:1,
+    //         src:'img/1.jpg',
+    //         name:'参数2',
+    //         distance:'120m',
+    //         intro:'吃死你提示',
+    //         price:'￥150',
+    //         count:'300'
+    //     },
+    //     {
+    //         id:1,
+    //         src:'img/1.jpg',
+    //         name:'参数2',
+    //         distance:'120m',
+    //         intro:'吃死你提示',
+    //         price:'￥150',
+    //         count:'300'
+    //     },
+    //     {
+    //         id:1,
+    //         src:'img/1.jpg',
+    //         name:'参数2',
+    //         distance:'120m',
+    //         intro:'吃死你提示',
+    //         price:'￥150',
+    //         count:'300'
+    //     }
+    // ],
     shoppingCartData:{},
     currentData:{
         id:2,
@@ -170,17 +170,27 @@ export let listData = (state = defaultState,action = {}) => {
 
 let reducer = {
     loadMoreList(state,action){
-        state.shopLoading = true;
-        setTimeout(() => {
-            dispatch({
-                type:'loadShopListEnd',
-                data:state.data.concat(state.data)
-            })
-        },2000);
+        let {start,limit,allData = [],moreLoading} = state;
+        let data = [];
+        if(!moreLoading){
+            if(start + limit < allData.length){
+                state.start = start += limit;
+                data = allData.slice(start,start + limit);
+                state.moreLoading = true;
+                setTimeout(() => {
+                    dispatch({
+                        type:'loadShopListEnd',
+                        data
+                    });
+                },500);
+            }else{
+                state.hasMore = false;
+            }
+        }
     },
     loadShopListEnd(state,action){
-        state.data = action.data;
-        state.shopLoading = false;
+        state.data = state.data.concat(action.data);
+        state.moreLoading = false;
     },
     shoppingCart(state,action){
         let {data,isPlus = true} = action;
@@ -213,8 +223,49 @@ let reducer = {
             state.currentData = currentData = {};
         }
         wt.extend(currentData,data);
+        state.foodLoading = true;
+        $.ajax({
+            url:'json/food.json',
+            success(data){
+                dispatch({
+                    type:'getFoodDataEnd',
+                    data
+                });
+            }
+        })
+    },
+    getFoodDataEnd(state,action){
+        state.foodLoading = false;
+        state.currentData.foodData = action.data;
     },
     saveShopListScrollTop(state,action){
         state.scrollTop = action.scrollTop;
+    },
+    getShopList(state,action){
+        state.isLoading = true;
+        let start = 0;
+        let limit = 10;
+        wt.extend(state,{
+            start,
+            limit
+        });
+        setTimeout(() => {
+            $.ajax({
+                url:'json/shop.json',
+                success(data){
+                    dispatch({
+                        type:'getShopListEnd',
+                        data
+                    });
+                }
+            });
+        },500);
+    },
+    getShopListEnd(state,action){
+        state.isLoading = false;
+        let {start,limit} = state;
+        let {data = []} = action;
+        state.allData = data;
+        state.data = data.slice(start,start + limit);
     }
 };

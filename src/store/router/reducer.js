@@ -7,6 +7,7 @@ import City from '../../views/city';
 import List from '../../views/list';
 import Shop from '../../views/shop';
 import Login from '../../views/login';
+import Input from '../../views/input';
 let defaultState = {
     list:[
         {
@@ -28,6 +29,10 @@ let defaultState = {
         {
             path:'/login',
             component:Login
+        },
+        {
+            path:'/input',
+            component:Input
         }
     ]
 };
