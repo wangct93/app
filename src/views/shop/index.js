@@ -12,13 +12,16 @@ import * as actions from '@/store/list/action';
 
 import Header from '../header';
 
+import {getPrice} from '@/computes/compute';
+
 
 class Shop extends Component{
     render(){
-        let {currentData = {},shopping,shoppingCartData = {}} = this.props;
-        let {name,score,intro,averPrice,foodData = {}} = currentData;
+        let {shopData = {},shopping,shoppingCartData = {}} = this.props;
+        let {name,score,intro,averPrice,foodData = []} = shopData;
         let foodList = this.formatFoodData(foodData);
-        let shoppingCart = shoppingCartData[currentData.id] || [];
+        let shoppingCart = shoppingCartData[shopData.id] || [];
+        let {foodActiveIndex = 0} = this.state || {};
         return <div className="page-flex shop-container">
             <Header>商户信息</Header>
             <div className="body">
@@ -39,11 +42,11 @@ class Shop extends Component{
                     <ul className="tv-nav">
                         {
                             foodList.map(({title},i) => {
-                                return <li key={i}>{title}</li>
+                                return <li onClick={this.scrollFood.bind(this,i)} key={i} className={foodActiveIndex === i ? 'active' : ''}>{title}</li>
                             })
                         }
                     </ul>
-                    <div className="tv-content">
+                    <div className="tv-content" ref="foodContent">
                         {
                             foodList.map((item,i) => {
                                 return <TvBox shoppingCart={shoppingCart} shopping={shopping} key={i} data={item} />
@@ -55,29 +58,51 @@ class Shop extends Component{
             </div>
         </div>
     }
-    formatFoodData(data){
+    componentDidMount(){
+        let {getShopData,match} = this.props;
+        getShopData(match.params.id);
+
+        let {foodContent} = this.refs;
+        $(foodContent).bind('scroll',e => {
+            let $box = $(e.target);
+            let t = $box.getRect().top;
+            $box.find('.tv-box').forEach((item,i) => {
+                let $item = $(item);
+                if($item.getRect().bottom > t){
+                    this.setState({
+                        foodActiveIndex:i
+                    });
+                    return false;
+                }
+            })
+        });
+    }
+    formatFoodData(data = []){
         let formatData = {};
         data.forEach((item,i) => {
-            let {type} = item;
-            let list = formatData[type];
+            let {keywords} = item;
+            let list = formatData[keywords];
             if(!list){
-                formatData[type] = list = [];
+                formatData[keywords] = list = [];
             }
             list.push(item);
         });
         let result = [];
-        for(let type in formatData){
-            if(formatData.hasOwnProperty(type)){
+        for(let keywords in formatData){
+            if(formatData.hasOwnProperty(keywords)){
                 result.push({
-                    title:type,
-                    list:formatData[type]
+                    title:keywords,
+                    list:formatData[keywords]
                 });
             }
         }
         return result;
     }
-    componentDidUpdate(){
-        console.log('update');
+    scrollFood(index){
+        let {foodContent} = this.refs;
+        let $box = $(foodContent);
+        let $target = $box.find('.tv-box').eq(index);
+        foodContent.scrollTop += $target.getRect().top - $box.getRect().top - 20;
     }
 }
 
@@ -91,7 +116,7 @@ class TvBox extends Component{
             <ul className="tv-list">
                 {
                     list.map((item,i) => {
-                        let {name,intro,id} = item;
+                        let {name,intro,id,price} = item;
                         let num = filterData[id] ? filterData[id].num : 0;
                         return <li key={i}>
                             <div className="img-box-full">
@@ -100,6 +125,7 @@ class TvBox extends Component{
                             <div className="info-box">
                                 <h2>{name}</h2>
                                 <p>{intro}</p>
+                                <p>{getPrice(price)}</p>
                             </div>
                             <div className="tv-op-box">
                                 {
@@ -129,7 +155,7 @@ class ShoppingFooter extends Component{
                 <div className="icon-box" onClick={this.showOrHide.bind(this)}>
                     <Icon type="shop"/>
                 </div>
-                <div>另需配送费￥4.5|支持到店自取</div>
+                <div className="shop-footer-text">另需配送费￥4.5|支持到店自取</div>
                 <div className="shop-price">￥20起送</div>
             </div>
             <div className="shopping-cart-view" style={{

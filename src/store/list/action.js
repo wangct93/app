@@ -10,12 +10,6 @@ export let loadMoreList = params => {
     }
 };
 
-export let updateShop = data => {
-    return {
-        type:'updateShopViewData',
-        data
-    }
-};
 
 
 export let shopping = (isPlus,data) => {
@@ -23,6 +17,13 @@ export let shopping = (isPlus,data) => {
         type:'shoppingCart',
         data,
         isPlus
+    }
+};
+
+export const getShopData = id => {
+    return {
+        type:'getShopData',
+        id
     }
 };
 

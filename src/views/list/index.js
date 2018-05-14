@@ -14,15 +14,18 @@ import Header from '../header';
 import SearchBox from '../home/lib/search';
 import LoadingBox from '@/components/loadingBox';
 
+
+import {getDistance,getPrice} from '@/computes/compute';
+
 class List extends Component{
     render(){
-        let {data = [],isLoading = true,hasMore = true} = this.props;
+        let {data = [],loadingShopList = true,hasMoreData = true} = this.props;
         return <div className="page-flex list-container">
             <Header>
                 <SearchBox />
             </Header>
             <div className="body fit">
-                <LoadingBox show={isLoading}/>
+                <LoadingBox show={loadingShopList}/>
                 <div className="fit overflow-auto" ref="scrollBox">
                     <ul className="shop-list" ref="list">
                         {
@@ -35,11 +38,11 @@ class List extends Component{
                                     <div className="info-box">
                                         <p>
                                             <span className="shop-title">{name}</span>
-                                            <span className="fr">{distance}</span>
+                                            <span className="fr">{getDistance(distance)}</span>
                                         </p>
                                         <p>{intro}</p>
                                         <p>
-                                            <span>人均 <span className="shop-price">￥{averPrice}</span></span>
+                                            <span>人均 <span className="shop-price">{getPrice(averPrice)}</span></span>
                                             <span className="fr">已售{soldCount}</span>
                                         </p>
                                     </div>
@@ -48,7 +51,7 @@ class List extends Component{
                         }
                     </ul>
                     <div className="footer-btn-box" ref="footer">
-                        <Button loading={hasMore}>{hasMore ? '加载更多' : '没有更多'}</Button>
+                        <Button loading={hasMoreData}>{hasMoreData ? '加载更多' : '没有更多'}</Button>
                     </div>
                 </div>
             </div>
@@ -56,12 +59,19 @@ class List extends Component{
     }
     componentDidMount(){
         let {scrollBox,footer} = this.refs;
-        let {loadMoreList,scrollTop = 0,moreLoading,hasMore = true} = this.props;
+        let {loadMoreList,scrollTop = 0,loadingMoreData,hasMoreData = true} = this.props;
+        let canLoad = true;
         $(scrollBox).bind('scroll',e => {
-            let boxBottom = $(e.target).getRect().bottom;
-            let footerTop = $(footer).getRect().top;
-            if(footerTop < boxBottom && !moreLoading && hasMore){
-                loadMoreList();
+            if(loadingMoreData){
+                canLoad = true;
+            }
+            if(canLoad && !loadingMoreData && hasMoreData){
+                let boxBottom = $(e.target).getRect().bottom;
+                let footerTop = $(footer).getRect().top;
+                if(footerTop < boxBottom){
+                    canLoad = false;
+                    loadMoreList();
+                }
             }
         });
         scrollBox.scrollTop = scrollTop;
@@ -75,9 +85,7 @@ class List extends Component{
         }
     }
     toShopDetail(data){
-        let {props} = this;
-        props.updateShop(data);
-        props.saveScrollTop(this.refs.scrollBox.scrollTop);
+        this.props.saveScrollTop(this.refs.scrollBox.scrollTop);
         location.hash = `/shop/${data.id}`;
     }
 }

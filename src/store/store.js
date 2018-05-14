@@ -8,7 +8,8 @@ import * as home from './home/reducer';
 import * as city from './city/reducer';
 import * as list from './list/reducer';
 import * as input from './input/reducer';
-let fn = combineReducers(wt.extend({},router,home,city,list,input));
+import * as user from './user/reducer';
+let fn = combineReducers(wt.extend({},router,home,city,list,input,user));
 export let store = createStore((state,action) => {
     console.log('store接收操作：' + action.type);
     return fn(state,action);
