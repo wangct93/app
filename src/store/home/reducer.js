@@ -196,8 +196,11 @@ let defaultState = {
 };
 
 export let homeData = (state = defaultState,action = {}) => {
-    state = wt.clone(state);
-    wt.execFunc(reducer[action.type],state,action);
+    let func = reducer[action.type];
+    if(typeof func === 'function'){
+        state = wt.clone(state);
+        func(state,action);
+    }
     return state;
 };
 

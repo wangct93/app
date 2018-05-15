@@ -54,7 +54,7 @@ class Shop extends Component{
                         }
                     </div>
                 </div>
-                <ShoppingFooter shoppingCart={shoppingCart}  shopping={shopping}/>
+                <ShoppingFooter shoppingCart={shoppingCart}  shopping={shopping} data={shopData}/>
             </div>
         </div>
     }
@@ -149,14 +149,27 @@ class ShoppingFooter extends Component{
     render(){
         let {listHeight = 0} = this;
         let {show} = this.state || {};
-        let {shoppingCart = [],shopping} = this.props;
+        let {shoppingCart = [],shopping,data,pay} = this.props;
+        let {qsPrice = 20,psPrice = 2.5} = data;
+        let price = shoppingCart.reduce((v,item) => {
+            return v + item.price * item.num;
+        },0);
         return ReactDOM.createPortal(<div onClick={this.click.bind(this)} className={`shopping-cart-container ${show ? 'mask-wrap' : ''}`}>
             <div className="shop-footer">
                 <div className="icon-box" onClick={this.showOrHide.bind(this)}>
                     <Icon type="shop"/>
                 </div>
-                <div className="shop-footer-text">另需配送费￥4.5|支持到店自取</div>
-                <div className="shop-price">￥20起送</div>
+                <div className="shop-footer-text">另需配送费￥{psPrice}|支持到店自取</div>
+                <div className="shop-price">
+                    {
+                        price ? price >= qsPrice ? '￥' + price : '还差￥' + (qsPrice - price) + '起送' : '￥' + qsPrice + '起送'
+                    }
+                </div>
+                {
+                    price >= qsPrice ? <Link to={`/order/${data.id}`}>
+                        <Button type="primary" size="small">下单</Button>
+                    </Link> : ''
+                }
             </div>
             <div className="shopping-cart-view" style={{
                 height:show ? listHeight + 'px' : 0

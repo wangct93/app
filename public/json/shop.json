@@ -7,7 +7,8 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":30
   },
   {
     "id":2,
@@ -17,7 +18,8 @@
     "type":"food",
     "score":4,
     "distance":1300,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":3,
@@ -27,7 +29,8 @@
     "type":"food",
     "score":5,
     "distance":1130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":4,
@@ -37,7 +40,8 @@
     "type":"food",
     "score":5,
     "distance":1330,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":5,
@@ -47,7 +51,8 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":6,
@@ -57,7 +62,8 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":7,
@@ -67,7 +73,8 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":8,
@@ -77,7 +84,8 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":9,
@@ -87,7 +95,8 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":10,
@@ -97,7 +106,8 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   },
   {
     "id":11,
@@ -107,6 +117,7 @@
     "type":"food",
     "score":5,
     "distance":130,
-    "averPrice":60
+    "averPrice":60,
+    "qsPrice":20
   }
 ]

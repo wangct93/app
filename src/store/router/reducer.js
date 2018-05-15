@@ -8,6 +8,7 @@ import List from '../../views/list';
 import Shop from '../../views/shop';
 import Login from '../../views/login';
 import Input from '../../views/input';
+import Order from '../../views/order';
 let defaultState = {
     list:[
         {
@@ -33,13 +34,20 @@ let defaultState = {
         {
             path:'/input',
             component:Input
+        },
+        {
+            path:'/order/:id',
+            component:Order
         }
     ]
 };
 
 export let routerData = (state = defaultState,action = {}) => {
-    state = wt.clone(state);
-    wt.execFunc(reducer[action.type],state,action);
+    let func = reducer[action.type];
+    if(typeof func === 'function'){
+        state = wt.clone(state);
+        func(state,action);
+    }
     return state;
 };
 

@@ -6,13 +6,15 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-import {Icon,Button} from 'antd';
+import {Icon,Button,Input} from 'antd';
 
 import * as actions from '@/store/list/action';
 
 import Header from '../header';
-import SearchBox from '../home/lib/search';
 import LoadingBox from '@/components/loadingBox';
+
+
+const {Search} = Input;
 
 
 import {getDistance,getPrice} from '@/computes/compute';
@@ -22,7 +24,9 @@ class List extends Component{
         let {data = [],loadingShopList = true,hasMoreData = true} = this.props;
         return <div className="page-flex list-container">
             <Header>
-                <SearchBox />
+                <div className="search-box">
+                    <Search />
+                </div>
             </Header>
             <div className="body fit">
                 <LoadingBox show={loadingShopList}/>
@@ -50,18 +54,21 @@ class List extends Component{
                             })
                         }
                     </ul>
-                    <div className="footer-btn-box" ref="footer">
-                        <Button loading={hasMoreData}>{hasMoreData ? '加载更多' : '没有更多'}</Button>
-                    </div>
+                    {
+                        data.length ? <div className="footer-btn-box" ref="footer">
+                            <Button loading={hasMoreData}>{hasMoreData ? '加载更多' : '没有更多'}</Button>
+                        </div> : ''
+                    }
                 </div>
             </div>
         </div>
     }
     componentDidMount(){
-        let {scrollBox,footer} = this.refs;
+        let {scrollBox} = this.refs;
         let {loadMoreList,scrollTop = 0,loadingMoreData,hasMoreData = true} = this.props;
         let canLoad = true;
         $(scrollBox).bind('scroll',e => {
+            let {footer} = this.refs;
             if(loadingMoreData){
                 canLoad = true;
             }

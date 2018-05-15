@@ -6,13 +6,13 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-import {Icon} from 'antd';
-
+import {Icon,Input} from 'antd';
 
 import Header from '../header';
-import SearchBox from './lib/search';
 import MenuList from './lib/menuList';
 import Box from './lib/box';
+
+const {Search} = Input;
 
 class Home extends Component{
     render(){
@@ -24,8 +24,10 @@ class Home extends Component{
                     <span>{city}</span>
                     <Icon type="down"/>
                 </Link>
-                <SearchBox />
-                <Link to="/login">
+                <div className="search-box">
+                    <Search placeholder="输入关键词查询"/>
+                </div>
+                <Link to="/login" className="user-box">
                     <Icon type="user"/>
                 </Link>
             </Header>
