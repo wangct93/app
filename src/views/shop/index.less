@@ -26,10 +26,31 @@
             margin-top: 5px;
         }
     }
-    .thing-view{
+    .shop-body{
         flex: 1;
-        display: flex;
         overflow: hidden;
+        margin-top: 20px;
+    }
+    .ant-tabs{
+        display: flex;
+        flex-direction: column;
+        .fit();
+    }
+    .ant-tabs-bar{
+        margin-bottom: 0;
+        background-color: #fff;
+        padding: 0 20px;
+    }
+    .ant-tabs-content{
+        .fit();
+        flex: 1;
+    }
+    .ant-tabs-tabpane{
+        .fit();
+    }
+    .thing-view{
+        .fit();
+        display: flex;
     }
     .tv-nav{
         flex: 0 0 auto;
@@ -80,6 +101,22 @@
         margin: 0 10px;
     }
 
+    .comment-list{
+        background-color: #fff;
+        padding: 0 20px;
+        > li{
+            padding: 10px 0;
+            .border-bottom();
+            line-height: 30px;
+            font-size: 14px;
+        }
+    }
+    .alt-text{
+        text-align: center;
+        line-height: 50px;
+        background-color: #fff;
+        .fit();
+    }
 }
 
 .shopping-cart-container{

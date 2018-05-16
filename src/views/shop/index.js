@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-import {Icon,Button,Rate} from 'antd';
+import {Icon,Button,Rate,Tabs} from 'antd';
 
 import * as actions from '@/store/list/action';
 
@@ -14,13 +14,15 @@ import Header from '../header';
 
 import {getPrice} from '@/computes/compute';
 
+const {TabPane} = Tabs;
 
 class Shop extends Component{
     render(){
-        let {shopData = {},shopping,shoppingCartData = {}} = this.props;
-        let {name,score,intro,averPrice,foodData = []} = shopData;
+        let {shopData = {},shopping,shoppingCartData = {},commentData = []} = this.props;
+        let {name,score,intro,averPrice,foodData = [],id} = shopData;
         let foodList = this.formatFoodData(foodData);
-        let shoppingCart = shoppingCartData[shopData.id] || [];
+        let shoppingCart = shoppingCartData[id] || [];
+        let commentList = commentData[id] || [];
         let {foodActiveIndex = 0} = this.state || {};
         return <div className="page-flex shop-container">
             <Header>商户信息</Header>
@@ -38,25 +40,59 @@ class Shop extends Component{
                         <p>{intro}</p>
                     </div>
                 </div>
-                <div className="thing-view">
-                    <ul className="tv-nav">
-                        {
-                            foodList.map(({title},i) => {
-                                return <li onClick={this.scrollFood.bind(this,i)} key={i} className={foodActiveIndex === i ? 'active' : ''}>{title}</li>
-                            })
-                        }
-                    </ul>
-                    <div className="tv-content" ref="foodContent">
-                        {
-                            foodList.map((item,i) => {
-                                return <TvBox shoppingCart={shoppingCart} shopping={shopping} key={i} data={item} />
-                            })
-                        }
-                    </div>
+                <div className="shop-body">
+                    <Tabs>
+                        <TabPane tab="商品" key="1">
+                            <div className="thing-view">
+                                <ul className="tv-nav">
+                                    {
+                                        foodList.map(({title},i) => {
+                                            return <li onClick={this.scrollFood.bind(this,i)} key={i} className={foodActiveIndex === i ? 'active' : ''}>{title}</li>
+                                        })
+                                    }
+                                </ul>
+                                <div className="tv-content" ref="foodContent">
+                                    {
+                                        foodList.map((item,i) => {
+                                            return <TvBox shoppingCart={shoppingCart} shopping={shopping} key={i} data={item} />
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </TabPane>
+                        <TabPane tab="评论" key="2">
+                            {
+                                commentList.length ? <ul className="comment-list">
+                                    {
+                                        commentList.map((item,i) => {
+                                            let {userName,score,content} = item;
+                                            return <li key={i}>
+                                                <p>
+                                                    <Icon type="user" />
+                                                    <span>{userName}</span>
+                                                </p>
+                                                <div>
+                                                    <Rate disabled={true} value={score} />
+                                                </div>
+                                                <p>{content}</p>
+                                            </li>
+                                        })
+                                    }
+                                </ul> : <div className="alt-text">暂无评论</div>
+                            }
+                        </TabPane>
+                    </Tabs>
                 </div>
                 <ShoppingFooter shoppingCart={shoppingCart}  shopping={shopping} data={shopData}/>
             </div>
         </div>
+    }
+    componentWillUpdate(props,state){
+        let {match = {},getShopData} = props;
+        let {match:oldMatch = {}} = this.props;
+        if(oldMatch.params.id !== match.params.id){
+            getShopData(match.params.id);
+        }
     }
     componentDidMount(){
         let {getShopData,match} = this.props;

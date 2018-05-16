@@ -3,7 +3,20 @@
  */
 import {dispatch} from '../store';
 let defaultState = {
-
+    commentData:{
+        1:[
+            {
+                userName:'13765465',
+                score:4,
+                content:'不好'
+            },
+            {
+                userName:'132765465',
+                score:5,
+                content:'非常好'
+            }
+        ]
+    }
 };
 
 export let listData = (state = defaultState,action = {}) => {
