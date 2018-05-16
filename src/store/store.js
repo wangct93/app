@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {createStore,combineReducers} from 'redux';
-
+const wt = require('@util');
 import * as router from './router/reducer';
 import * as home from './home/reducer';
 import * as city from './city/reducer';

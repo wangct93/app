@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
+const wt = require('@util');
 let defaultState = {
     hotList:[
         {
