@@ -30,25 +30,31 @@ export let listData = (state = defaultState,action = {}) => {
 
 let reducer = {
     loadMoreList(state,action){
-        let {start,limit,allData = []} = state;
-        let data = [];
-        state.start = start += limit;
-        data = allData.slice(start,start + limit);
-        state.loadingMoreData = true;
-        setTimeout(() => {
-            dispatch({
-                type:'loadShopListEnd',
-                data
-            });
-        },500);
+        let {allData = [],params = {},loadingMoreData} = state;
+        let {start,limit} = params;
+        let newStart = start + limit;
+        if(loadingMoreData){
+            return;
+        }
+        if(newStart >= allData.length){
+            state.hasMoreData = false;
+        }else{
+            params.start = newStart;
+            state.loadingMoreData = true;
+            setTimeout(() => {
+                dispatch({
+                    type:'loadShopListEnd',
+                    data:allData.slice(newStart,newStart + limit)
+                });
+            },500);
+        }
+
     },
     loadShopListEnd(state,action){
-        state.loadingMoreData = false;
-        state.data = state.data.concat(action.data);
-        let {start,limit,allData = []} = state;
-        if(start + limit >= allData.length){
-            state.hasMoreData = false;
-        }
+        wt.extend(state,{
+            loadingMoreData:false,
+            data:state.data.concat(action.data)
+        });
     },
     shoppingCart(state,action){
         let {data,isPlus = true} = action;
@@ -127,12 +133,13 @@ let reducer = {
         state.scrollTop = action.scrollTop;
     },
     getShopList(state,action){
-        state.loadingShopList = true;
-        let start = 0;
-        let limit = 10;
         wt.extend(state,{
-            start,
-            limit
+            loadingShopList:true,
+            hasMoreData:true,
+            params:{
+                start:0,
+                limit:10
+            }
         });
         setTimeout(() => {
             $.ajax({
@@ -147,10 +154,12 @@ let reducer = {
         },500);
     },
     getShopListEnd(state,action){
-        state.loadingShopList = false;
-        let {start,limit} = state;
+        let {start,limit} = state.params || {};
         let {data = []} = action;
-        state.allData = data;
-        state.data = data.slice(start,start + limit);
+        wt.extend(state,{
+            allData:data,
+            data:data.slice(start,start + limit),
+            loadingShopList:false
+        });
     }
 };

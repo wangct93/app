@@ -29,5 +29,15 @@ class Order extends Component{
         </div>
     }
 }
+export class OrderList extends Component{
+    render(){
+        return <div className="page-flex">
+            <Header>订单详情</Header>
+            <div className="body">
+
+            </div>
+        </div>
+    }
+}
 
 export default connect(state => state.listData,actions)(Order);

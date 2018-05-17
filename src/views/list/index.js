@@ -63,37 +63,39 @@ class List extends Component{
             </div>
         </div>
     }
+    componentWillUpdate(props,state){
+        if(props.match.url !== this.props.match.url){
+            this.getData();
+        }
+    }
     componentDidMount(){
         let {scrollBox} = this.refs;
-        let {loadMoreList,scrollTop = 0,loadingMoreData,hasMoreData = true} = this.props;
-        let canLoad = true;
+        let {loadMoreList,scrollTop = 0,data = []} = this.props;
         $(scrollBox).bind('scroll',e => {
+            let {loadingMoreData,hasMoreData = true} = this.props;
             let {footer} = this.refs;
-            if(loadingMoreData){
-                canLoad = true;
-            }
-            if(canLoad && !loadingMoreData && hasMoreData){
+            if(!loadingMoreData && hasMoreData){
                 let boxBottom = $(e.target).getRect().bottom;
                 let footerTop = $(footer).getRect().top;
                 if(footerTop < boxBottom){
-                    canLoad = false;
                     loadMoreList();
                 }
             }
         });
         scrollBox.scrollTop = scrollTop;
-        this.getData();
-    }
-    getData(){
-        let {data = [],match = {},getShopList} = this.props;
-        let type = match.params.type;
         if(data.length === 0){
-            getShopList(type);
+            this.getData();
         }
     }
+    getData(){
+        let {match = {},getShopList} = this.props;
+        let {params = {}} = match;
+        getShopList(params.type);
+    }
     toShopDetail(data){
-        this.props.saveScrollTop(this.refs.scrollBox.scrollTop);
-        location.hash = `/shop/${data.id}`;
+        let {saveScrollTop,history} = this.props;
+        saveScrollTop(this.refs.scrollBox.scrollTop);
+        history.push(`/shop/${data.id}`);
     }
 }
 
