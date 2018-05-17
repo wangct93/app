@@ -17,7 +17,11 @@ import LoadingBox from '@/components/loadingBox';
 
 class LoginBox extends Component{
     render(){
-        let {loadingLogin,alertInfo,login,clearAlerInfo} = this.props;
+        let {loadingLogin,alertInfo,login,clearAlerInfo,info,history} = this.props;
+        if(info){
+            history.goBack();
+            return null;
+        }
         return <div className="page-flex login-container">
             <Header>登录</Header>
             <div className="body">
@@ -52,8 +56,16 @@ class Box extends Component{
                 {getFieldDecorator('yzm',{
                     rules:[
                         {
-                            required:true,
-                            message:'请输入验证码'
+                            validator:(rule,value,cb) => {
+                                let {yzmTimeout} = this.state || {};
+                                let message;
+                                if(!yzmTimeout){
+                                    message = '请发送验证！';
+                                }else if(!value){
+                                    message = '请输入验证码！';
+                                }
+                                cb(message);
+                            }
                         }
                     ]
                 })(

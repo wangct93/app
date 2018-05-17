@@ -21,7 +21,7 @@ import {getDistance,getPrice} from '@/computes/compute';
 
 class List extends Component{
     render(){
-        let {data = [],loadingShopList = true,hasMoreData = true} = this.props;
+        let {data = [],loadingShopList = true,hasMoreData = true,getShopDataError} = this.props;
         return <div className="page-flex list-container">
             <Header>
                 <div className="search-box">

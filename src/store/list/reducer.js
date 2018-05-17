@@ -123,11 +123,20 @@ let reducer = {
                 type:'getShopDataEnd',
                 data
             });
+        },e => {
+            dispatch({
+                type:'getShopDataError',
+                message:e
+            });
         });
     },
     getShopDataEnd(state,action){
         state.loadingShopData = false;
         state.shopData = action.data;
+    },
+    getShopDataError(state,action){
+        state.loadingShopData = false;
+        state.getShopDataError = action.message;
     },
     saveShopListScrollTop(state,action){
         state.scrollTop = action.scrollTop;

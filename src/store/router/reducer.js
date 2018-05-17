@@ -8,7 +8,7 @@ import List from '../../views/list';
 import Shop from '../../views/shop';
 import Login from '../../views/login';
 import Input from '../../views/input';
-import Order,{OrderList} from '../../views/order';
+import Order,{MyOrder} from '../../views/order';
 import User from '../../views/user';
 let defaultState = {
     list:[
@@ -41,8 +41,8 @@ let defaultState = {
             component:Order
         },
         {
-            path:'/orderList',
-            component:OrderList
+            path:'/MyOrder',
+            component:MyOrder
         },
         {
             path:'/user',
@@ -55,7 +55,7 @@ let defaultState = {
             text:'首页'
         },
         {
-            path:'/OrderList',
+            path:'/MyOrder',
             text:'订单'
         },
         {
