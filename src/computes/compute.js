@@ -16,3 +16,10 @@ export const getDistance = (num,sep = ' ') => {
     }
     return result;
 };
+
+export const getAllPrice = (list) => {
+    return list.reduce((ov,item) => {
+        let {count = 1,price} = item;
+        return ov + count * price;
+    },0);
+};

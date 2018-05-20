@@ -1,192 +1,39 @@
 @import "../../common/less/common";
 
-.shop-container{
-    > .body{
+@headerBgColor:#1890ff;
+.user-container{
+    .user-box{
+        background-color: @headerBgColor;
         display: flex;
-        flex-direction: column;
-        padding-bottom: 50px;
-    }
-    .shop-header{
-        display: flex;
-        padding: 20px;
-        background-color: #fff;
-        .img-box-full{
-            width: 120px;
-            height: 120px;
-        }
-        .score-line{
-            margin-bottom: 10px;
-        }
-    }
-    .info-box{
-        flex: 1;
-        overflow: hidden;
-        padding: 0 20px;
-        p{
-            margin-top: 5px;
-        }
-    }
-    .shop-body{
-        flex: 1;
-        overflow: hidden;
-        margin-top: 20px;
-    }
-    .ant-tabs{
-        display: flex;
-        flex-direction: column;
-        .fit();
-    }
-    .ant-tabs-bar{
-        margin-bottom: 0;
-        background-color: #fff;
-        padding: 0 20px;
-    }
-    .ant-tabs-content{
-        .fit();
-        flex: 1;
-    }
-    .ant-tabs-tabpane{
-        .fit();
-    }
-    .thing-view{
-        .fit();
-        display: flex;
-    }
-    .tv-nav{
-        flex: 0 0 auto;
-        width: 100px;
-        background-color: #fff;
-        > li{
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            border-top: 1px solid @borderColor;
-            cursor: pointer;
-            &:first-child{
-                border-top-width: 0;
-            }
-            &.active{
-                background-color: #eee;
-            }
-        }
-    }
-    .tv-content{
-        flex: 1;
-        padding: 20px;
-        overflow: auto;
-    }
-    .tv-box{
-        background-color: #fff;
-        margin-bottom: 20px;
-    }
-    .tv-header{
-        height: 34px;
-        line-height: 34px;
-        .border-bottom();
-        padding-left: 15px;
-    }
-    .tv-list{
-        > li{
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            .border-bottom();
-            .img-box-full{
-                width: 80px;
-                height: 80px;
-            }
-        }
-    }
-    .tv-count{
-        margin: 0 10px;
-    }
-
-    .comment-list{
-        background-color: #fff;
-        padding: 0 20px;
-        > li{
-            padding: 10px 0;
-            .border-bottom();
-            line-height: 30px;
-            font-size: 14px;
-        }
-    }
-    .alt-text{
-        text-align: center;
-        line-height: 50px;
-        background-color: #fff;
-        .fit();
-    }
-}
-
-.shopping-cart-container{
-    position: absolute;
-    display: flex;
-    flex-direction: column-reverse;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: 20;
-    .shop-footer{
-        display: flex;
-        flex: 0 0 auto;
-        height: 50px;
-        background-color: #333;
-        color: #eee;
         align-items: center;
-        padding: 0 10px;
-        .icon-box{
-            position: relative;
-            height:50px;
-            line-height: 50px;
+        padding: 10px;
+        .img-box-fit{
             width: 50px;
-            text-align: center;
-            top: -20px;
-            border-radius: 50%;
-            background-color: #eee;
-            font-size: 0;
+            height: 50px;
         }
-        .anticon{
-            font-size: 30px;
-            color: #333;
-            vertical-align: middle;
-        }
-        .shop-price{
-            flex: 1;
-            text-align: right;
-            padding-right: 20px;
-        }
-        .shop-footer-text{
-            padding: 0 10px;
+        .info-box{
+            flex:1;
+            padding: 0 15px;
         }
     }
-    &.mask-wrap{
-        .fit();
-    }
-    .shopping-cart-view{
-        transition:height .5s;
-        overflow: hidden;
-        flex: 0 0 auto;
+    .item-list{
         background-color: #fff;
-    }
-    .shoppping-list{
+        margin: 10px;
+        padding: 0 10px;
         > li{
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            .border-top();
-            &:first-child{
-                border-top-width: 0;
+            .border-bottom();
+            &:last-child{
+                border-bottom-width: 0;
+            }
+            > a{
+                display: flex;
+                align-items: center;
+                height: 40px;
+            }
+            .text-name{
+                flex:1;
+                margin: 0 10px;
             }
         }
-    }
-    .food-name{
-        flex: 1;
-    }
-    .shop-num-op{
-
-    }
-    .tv-count{
-        margin: 0 10px;
     }
 }

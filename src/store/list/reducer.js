@@ -16,6 +16,30 @@ let defaultState = {
                 content:'非常好'
             }
         ]
+    },
+    shoppingCartData:{
+        1:[
+            {
+                count:2,
+                id:1,
+                intro: "坐下来聊聊天",
+                keywords: "热销",
+                monthSold: 6010,
+                name: "拿铁",
+                price: 180,
+                shopId: 1
+            },
+            {
+                count:4,
+                id:3,
+                intro: "坐下来2聊聊天",
+                keywords: "热销333",
+                monthSold: 6010,
+                name: "拿铁2222",
+                price: 18,
+                shopId: 1
+            }
+        ]
     }
 };
 
@@ -72,13 +96,13 @@ let reducer = {
         if(!target){
             target = wt.clone(data);
             list.push(target);
-            target.num = 0;
+            target.count = 0;
         }
         if(isPlus){
-            target.num++;
+            target.count++;
         }else{
-            target.num = Math.max(target.num - 1,0);
-            if(target.num === 0){
+            target.count = Math.max(target.count - 1,0);
+            if(target.count === 0){
                 list.remove(target);
             }
         }
@@ -93,7 +117,7 @@ let reducer = {
                     id
                 },
                 success(data){
-                    let target = data.filter(item => item.id == id)[0] || {};
+                    let target = data.filter(item => +item.id === +id)[0] || {};
                     cb(target);
                 },
                 error(e){
@@ -108,7 +132,7 @@ let reducer = {
                     id
                 },
                 success(data){
-                    let foodList = data.filter(item => item.shopId == id);
+                    let foodList = data.filter(item => +item.shopId === +id);
                     cb(foodList);
                 },
                 error(e){
@@ -163,12 +187,30 @@ let reducer = {
         },500);
     },
     getShopListEnd(state,action){
-        let {start,limit} = state.params || {};
+        let {start, limit} = state.params || {};
         let {data = []} = action;
-        wt.extend(state,{
-            allData:data,
-            data:data.slice(start,start + limit),
-            loadingShopList:false
+        wt.extend(state, {
+            allData: data,
+            data: data.slice(start, start + limit),
+            loadingShopList: false
         });
+    },
+
+    submitComment(state,action){
+        let {data} = action;
+        let {commentData} = state;
+        if(!commentData){
+            state.commentData = commentData = {};
+        }
+        let {shopId} = data;
+        let list = commentData[shopId];
+        if(!list){
+            commentData[shopId] = list = [];
+        }
+        list.unshift(data);
+    },
+    createOrder(state,action){
+        let {data:shopData} = action;
+        delete state.shoppingCartData[shopData.id];
     }
 };

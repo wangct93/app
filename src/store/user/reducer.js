@@ -3,7 +3,25 @@
  */
 import {dispatch} from '../store';
 let defaultState = {
-
+    info:{
+        name:'1234'
+    },
+    viewData:[
+        [
+            {
+                iconCls:'left',
+                text:'收货地址'
+            },
+            {
+                iconCls:'left',
+                text:'我的收藏'
+            },
+            {
+                iconCls:'left',
+                text:'我的客服'
+            }
+        ]
+    ]
 };
 
 export let userData = (state = defaultState,action = {}) => {

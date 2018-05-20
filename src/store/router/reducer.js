@@ -8,8 +8,9 @@ import List from '../../views/list';
 import Shop from '../../views/shop';
 import Login from '../../views/login';
 import Input from '../../views/input';
-import Order,{MyOrder} from '../../views/order';
+import Order,{MyOrder,OrderDetail} from '../../views/order';
 import User from '../../views/user';
+import Comment from '../../views/comment';
 let defaultState = {
     list:[
         {
@@ -41,12 +42,20 @@ let defaultState = {
             component:Order
         },
         {
-            path:'/MyOrder',
+            path:'/myOrder',
             component:MyOrder
         },
         {
             path:'/user',
             component:User
+        },
+        {
+            path:'/orderDetail/:userId/:id',
+            component:OrderDetail
+        },
+        {
+            path:'/comment/:shopId/:shopName/:orderId',
+            component:Comment
         }
     ],
     footerList:[
@@ -55,7 +64,7 @@ let defaultState = {
             text:'首页'
         },
         {
-            path:'/MyOrder',
+            path:'/myOrder',
             text:'订单'
         },
         {

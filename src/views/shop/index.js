@@ -28,7 +28,7 @@ class Shop extends Component{
             <Header>商户信息</Header>
             <div className="body">
                 <div className="shop-header">
-                    <div className="img-box-full">
+                    <div className="img-box-fit">
                         <img src="img/1.jpg"/>
                     </div>
                     <div className="info-box">
@@ -153,25 +153,25 @@ class TvBox extends Component{
                 {
                     list.map((item,i) => {
                         let {name,intro,id,price} = item;
-                        let num = filterData[id] ? filterData[id].num : 0;
+                        let count = filterData[id] ? filterData[id].count : 0;
                         return <li key={i}>
-                            <div className="img-box-full">
+                            <div className="img-box-fit">
                                 <img src="img/1.jpg"/>
                             </div>
                             <div className="info-box">
                                 <h2>{name}</h2>
-                                <p>{intro}</p>
-                                <p>{getPrice(price)}</p>
-                            </div>
-                            <div className="tv-op-box">
-                                {
-                                    num ? <React.Fragment>
-                                        <Button shape="circle" onClick={shopping.bind(this,false,item)} icon="minus" size="small"/>
-                                        <span className="tv-count">{num}</span>
-                                    </React.Fragment> : ''
-                                }
+                                <p className="text-intro">{intro}</p>
+                                <div className="op-box">
+                                    <span className="text-price">{getPrice(price)}</span>
+                                    {
+                                        count ? <React.Fragment>
+                                            <Button shape="circle" onClick={shopping.bind(this,false,item)} icon="minus" size="small"/>
+                                            <span className="tv-count">{count}</span>
+                                        </React.Fragment> : ''
+                                    }
 
-                                <Button shape="circle" onClick={shopping.bind(this,true,item)} icon="plus" size="small"/>
+                                    <Button shape="circle" onClick={shopping.bind(this,true,item)} icon="plus" size="small"/>
+                                </div>
                             </div>
                         </li>
                     })
@@ -188,7 +188,7 @@ class ShoppingFooter extends Component{
         let {shoppingCart = [],shopping,data,pay} = this.props;
         let {qsPrice = 20,psPrice = 2.5} = data;
         let price = shoppingCart.reduce((v,item) => {
-            return v + item.price * item.num;
+            return v + item.price * item.count;
         },0);
         return ReactDOM.createPortal(<div onClick={this.click.bind(this)} className={`shopping-cart-container ${show ? 'mask-wrap' : ''}`}>
             <div className="shop-footer">

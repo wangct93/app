@@ -41,3 +41,10 @@ export const getShopList = shopType => {
         shopType
     }
 };
+
+export const submitComment = data => {
+    return {
+        type:'submitComment',
+        data
+    }
+};

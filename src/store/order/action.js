@@ -17,3 +17,12 @@ export const clearAlerInfo = () => {
         type:'clearLoginAlertInfo'
     }
 };
+
+
+export const createOrder = (userInfo,data) => {
+    return {
+        type:'createOrder',
+        userInfo,
+        data
+    }
+};
