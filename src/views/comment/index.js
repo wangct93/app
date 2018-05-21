@@ -18,6 +18,7 @@ class Comment extends Component{
     render(){
         let {match} = this.props;
         let {shopName} = match.params;
+        let {score = 0} = this.state || {};
         return <div className="page-flex comment-container">
             <Header>评论</Header>
             <div className="body">
@@ -29,7 +30,7 @@ class Comment extends Component{
                 </div>
                 <div className="score-box">
                     <h2>这次用餐体验满意吗？</h2>
-                    <Rate/>
+                    <Rate value={score} onChange={this.setScore.bind(this)}/>
                 </div>
                 <div className="textarea-box">
                     <div className="text-title">评论信息</div>
@@ -41,16 +42,22 @@ class Comment extends Component{
     }
     submit(){
         let {match,userInfo = {},history} = this.props;
+        let {score = 0} = this.state || {};
         let {shopId,orderId} = match.params;
         let content = this.refs.textarea.value;
         this.props.submitComment({
             userName:userInfo.name,
             shopId,
             content,
-            score:4,
+            score,
             orderId
         });
         history.goBack();
+    }
+    setScore(v){
+        this.setState({
+            score:v
+        });
     }
 }
 export default connect(state => ({
