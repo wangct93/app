@@ -21,7 +21,8 @@ import {getDistance,getPrice} from '@/computes/compute';
 
 class List extends Component{
     render(){
-        let {data = [],loadingShopList = true,hasMoreData = true,getShopDataError} = this.props;
+        let {data = [],loadingShopList = true,dataTotal = 0,getShopDataError} = this.props;
+        let hasMoreData = data.length < dataTotal;
         return <div className="page-flex list-container">
             <Header>
                 <div className="search-box">
@@ -72,12 +73,17 @@ class List extends Component{
         let {scrollBox} = this.refs;
         let {loadMoreList,scrollTop = 0,data = []} = this.props;
         $(scrollBox).bind('scroll',e => {
-            let {loadingMoreData,hasMoreData = true} = this.props;
+            let {loadingMoreData,data = [],dataTotal = 0} = this.props;
             let {footer} = this.refs;
-            if(!loadingMoreData && hasMoreData){
+            let disabledStaus = scrollBox.disabledStaus;
+            if(loadingMoreData){
+                disabledStaus = false;
+            }
+            if(!disabledStaus && !loadingMoreData && data.length < dataTotal){
                 let boxBottom = $(e.target).getRect().bottom;
                 let footerTop = $(footer).getRect().top;
                 if(footerTop < boxBottom){
+                    scrollBox.disabledStaus = true;
                     loadMoreList();
                 }
             }

@@ -3,46 +3,7 @@
  */
 import {dispatch} from '../store';
 let defaultState = {
-    data:{
-        1234:[
-            {
-                id:1,
-                shopName:'ll',
-                shopId:1,
-                time:'2018-04-04 12:22:33',
-                list:[
-                    {
-                        name:'咖啡',
-                        price:'18',
-                        count:3
-                    },
-                    {
-                        name:'咖啡',
-                        price:'18',
-                        count:3
-                    }
-                ]
-            },
-            {
-                id:2,
-                shopName:'ll',
-                shopId:1,
-                time:'2018-04-04 12:22:33',
-                list:[
-                    {
-                        name:'咖啡',
-                        price:'18',
-                        count:3
-                    },
-                    {
-                        name:'咖啡',
-                        price:'18',
-                        count:3
-                    }
-                ]
-            }
-        ]
-    }
+    data:{}
 };
 
 export let orderData = (state = defaultState,action = {}) => {

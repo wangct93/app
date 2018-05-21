@@ -213,12 +213,12 @@ class ShoppingFooter extends Component{
                 <ul className="shoppping-list" ref="list">
                     {
                         shoppingCart.map((item,i) => {
-                            let {name,num} = item;
+                            let {name,count} = item;
                             return <li key={i}>
                                 <div className="food-name">{name}</div>
                                 <div className="shop-num-op">
                                     <Button shape="circle" onClick={shopping.bind(this,false,item)} icon="minus" size="small"/>
-                                    <span className="tv-count">{num}</span>
+                                    <span className="tv-count">{count}</span>
                                     <Button shape="circle" onClick={shopping.bind(this,true,item)} icon="plus" size="small"/>
                                 </div>
                             </li>;

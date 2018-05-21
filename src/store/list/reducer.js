@@ -3,44 +3,7 @@
  */
 import {dispatch} from '../store';
 let defaultState = {
-    commentData:{
-        1:[
-            {
-                userName:'13765465',
-                score:4,
-                content:'不好'
-            },
-            {
-                userName:'132765465',
-                score:5,
-                content:'非常好'
-            }
-        ]
-    },
-    shoppingCartData:{
-        1:[
-            {
-                count:2,
-                id:1,
-                intro: "坐下来聊聊天",
-                keywords: "热销",
-                monthSold: 6010,
-                name: "拿铁",
-                price: 180,
-                shopId: 1
-            },
-            {
-                count:4,
-                id:3,
-                intro: "坐下来2聊聊天",
-                keywords: "热销333",
-                monthSold: 6010,
-                name: "拿铁2222",
-                price: 18,
-                shopId: 1
-            }
-        ]
-    }
+
 };
 
 export let listData = (state = defaultState,action = {}) => {
@@ -54,25 +17,17 @@ export let listData = (state = defaultState,action = {}) => {
 
 let reducer = {
     loadMoreList(state,action){
-        let {allData = [],params = {},loadingMoreData} = state;
-        let {start,limit} = params;
-        let newStart = start + limit;
-        if(loadingMoreData){
-            return;
-        }
-        if(newStart >= allData.length){
-            state.hasMoreData = false;
-        }else{
-            params.start = newStart;
-            state.loadingMoreData = true;
-            setTimeout(() => {
-                dispatch({
-                    type:'loadShopListEnd',
-                    data:allData.slice(newStart,newStart + limit)
-                });
-            },500);
-        }
-
+        let {allData = [],params = {}} = state;
+        let {limit} = params;
+        params.start += limit;
+        let {start} = params;
+        state.loadingMoreData = true;
+        setTimeout(() => {
+            dispatch({
+                type:'loadShopListEnd',
+                data:allData.slice(start,start + limit)
+            });
+        },500);
     },
     loadShopListEnd(state,action){
         wt.extend(state,{
@@ -82,15 +37,10 @@ let reducer = {
     },
     shoppingCart(state,action){
         let {data,isPlus = true} = action;
-        let {shoppingCartData,shopData = {}} = state;
-        if(!shoppingCartData){
-            state.shoppingCartData = shoppingCartData = {};
-        }
+        let datas = wt.getValue(state,'shoppingCartData',{});
+        let {shopData = {}} = state;
         let {id} = shopData;
-        let list = shoppingCartData[id];
-        if(!list){
-            shoppingCartData[id] = list = [];
-        }
+        let list = wt.getValue(datas,id,[]);
         let filterData = list.toFieldObject('id');
         let target = filterData[data.id];
         if(!target){
@@ -168,7 +118,6 @@ let reducer = {
     getShopList(state,action){
         wt.extend(state,{
             loadingShopList:true,
-            hasMoreData:true,
             params:{
                 start:0,
                 limit:10
@@ -192,21 +141,14 @@ let reducer = {
         wt.extend(state, {
             allData: data,
             data: data.slice(start, start + limit),
-            loadingShopList: false
+            loadingShopList: false,
+            dataTotal:data.length
         });
     },
-
     submitComment(state,action){
         let {data} = action;
-        let {commentData} = state;
-        if(!commentData){
-            state.commentData = commentData = {};
-        }
-        let {shopId} = data;
-        let list = commentData[shopId];
-        if(!list){
-            commentData[shopId] = list = [];
-        }
+        let commentData = wt.getValue(state,'commentData',{});
+        let list = wt.getValue(commentData,data.shopId,[]);
         list.unshift(data);
     },
     createOrder(state,action){
