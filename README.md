@@ -1,3 +1,11 @@
+展示步骤：
+1、下载项目
+2、访问build/index.html即可
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

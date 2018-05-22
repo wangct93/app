@@ -2,6 +2,8 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
+import shopList from '@/json/shop.json';
+import foodList from '@/json/food.json'
 let defaultState = {
 
 };
@@ -61,34 +63,42 @@ let reducer = {
         state.loadingShopData = true;
         let {id} = action;
         let p1 = new Promise((cb,eb) => {
-            $.ajax({
-                url:'json/shop.json',
-                data:{
-                    id
-                },
-                success(data){
-                    let target = data.filter(item => +item.id === +id)[0] || {};
-                    cb(target);
-                },
-                error(e){
-                    eb(e)
-                }
-            });
+            setTimeout(() => {
+                let target = shopList.filter(item => +item.id === +id)[0] || {};
+                cb(target);
+            },500);
+            // $.ajax({
+            //     url:'json/shop.json',
+            //     data:{
+            //         id
+            //     },
+            //     success(data){
+            //         let target = data.filter(item => +item.id === +id)[0] || {};
+            //         cb(target);
+            //     },
+            //     error(e){
+            //         eb(e)
+            //     }
+            // });
         });
         let p2 = new Promise((cb,eb) => {
-            $.ajax({
-                url:'json/food.json',
-                data:{
-                    id
-                },
-                success(data){
-                    let foodList = data.filter(item => +item.shopId === +id);
-                    cb(foodList);
-                },
-                error(e){
-                    eb(e)
-                }
-            });
+            setTimeout(() => {
+                let data = foodList.filter(item => +item.shopId === +id);
+                cb(data);
+            },500);
+            // $.ajax({
+            //     url:'json/food.json',
+            //     data:{
+            //         id
+            //     },
+            //     success(data){
+            //         let foodList = data.filter(item => +item.shopId === +id);
+            //         cb(foodList);
+            //     },
+            //     error(e){
+            //         eb(e)
+            //     }
+            // });
         });
         Promise.all([p1,p2]).then(result => {
             let data = result[0];
@@ -124,15 +134,19 @@ let reducer = {
             }
         });
         setTimeout(() => {
-            $.ajax({
-                url:'json/shop.json',
-                success(data){
-                    dispatch({
-                        type:'getShopListEnd',
-                        data
-                    });
-                }
+            dispatch({
+                type:'getShopListEnd',
+                data:shopList
             });
+            // $.ajax({
+            //     url:'json/shop.json',
+            //     success(data){
+            //         dispatch({
+            //             type:'getShopListEnd',
+            //             data
+            //         });
+            //     }
+            // });
         },500);
     },
     getShopListEnd(state,action){

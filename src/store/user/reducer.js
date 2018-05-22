@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
+import userList from '@/json/user.json';
 let defaultState = {
     viewData:[
         [
@@ -36,16 +37,23 @@ export let userData = (state = defaultState,action = {}) => {
 let reducer = {
     login(state,{data}){
         state.loadingLogin = true;
-        $.ajax({
-            url:'json/user.json',
-            success(result){
-                let info = result.filter(item => item.name === data.name && item.pwd === data.pwd)[0];
-                dispatch({
-                    type:'loginEnd',
-                    data:info
-                });
-            }
-        });
+        setTimeout(() => {
+            let info = userList.filter(item => item.name === data.name && item.pwd === data.pwd)[0];
+            dispatch({
+                type:'loginEnd',
+                data:info
+            });
+        },500);
+        // $.ajax({
+        //     url:'json/user.json',
+        //     success(result){
+        //         let info = result.filter(item => item.name === data.name && item.pwd === data.pwd)[0];
+        //         dispatch({
+        //             type:'loginEnd',
+        //             data:info
+        //         });
+        //     }
+        // });
     },
     loginEnd(state,{data}){
         state.loadingLogin = false;
