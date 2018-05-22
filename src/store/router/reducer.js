@@ -12,6 +12,7 @@ import Order,{MyOrder,OrderDetail} from '../../views/order';
 import User from '../../views/user';
 import Comment from '../../views/comment';
 let defaultState = {
+    defaultPath:'/home',
     list:[
         {
             path:'/home',
@@ -29,10 +30,10 @@ let defaultState = {
             path:'/shop/:id',
             component:Shop
         },
-        {
-            path:'/login',
-            component:Login
-        },
+        // {
+        //     path:'/login',
+        //     component:Login
+        // },
         {
             path:'/input',
             component:Input

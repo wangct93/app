@@ -152,7 +152,7 @@ let reducer = {
         list.unshift(data);
     },
     createOrder(state,action){
-        let {data:shopData} = action;
+        let {shopData} = action;
         delete state.shoppingCartData[shopData.id];
     }
 };

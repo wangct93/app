@@ -18,10 +18,6 @@ import LoadingBox from '@/components/loadingBox';
 class LoginBox extends Component{
     render(){
         let {loadingLogin,alertInfo,login,clearAlerInfo,info,history} = this.props;
-        if(info){
-            history.goBack();
-            return null;
-        }
         return <div className="page-flex login-container">
             <Header>登录</Header>
             <div className="body">
@@ -41,19 +37,19 @@ class Box extends Component{
         let {yzmTimeout = 0} = this.state || {};
         return <Form onSubmit={this.click.bind(this)}>
             <FormItem>
-                {getFieldDecorator('tel',{
+                {getFieldDecorator('name',{
                     rules:[
                         {
                             required:true,
-                            message:'请输入手机号'
+                            message:'请输入用户名'
                         }
                     ]
                 })(
-                    <Input size="large" prefix={<Icon type="user" />} placeholder="输入手机号" />
+                    <Input size="large" prefix={<Icon type="user" />} placeholder="输入用户名" />
                 )}
             </FormItem>
             <FormItem required={true}>
-                {getFieldDecorator('yzm',{
+                {getFieldDecorator('pwd',{
                     rules:[
                         {
                             validator:(rule,value,cb) => {
@@ -74,6 +70,9 @@ class Box extends Component{
             </FormItem>
             <Button size="large" type="primary" htmlType="submit">登录</Button>
         </Form>
+    }
+    componentWillUnmount(){
+        clearInterval(this.timer);
     }
     click(e){
         e.preventDefault();
@@ -97,6 +96,13 @@ class Box extends Component{
                 clearInterval(timer);
             }
         },1000);
+        this.timer = timer;
+    }
+    componentDidMount(){
+        this.props.login({
+            name:'admin',
+            pwd:'1234'
+        });
     }
 }
 

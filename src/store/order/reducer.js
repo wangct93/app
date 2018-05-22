@@ -3,7 +3,8 @@
  */
 import {dispatch} from '../store';
 let defaultState = {
-    data:{}
+    data:{},
+    createId:1
 };
 
 export let orderData = (state = defaultState,action = {}) => {
@@ -17,26 +18,27 @@ export let orderData = (state = defaultState,action = {}) => {
 
 let reducer = {
     createOrder(state,action){
-        let {userInfo,data} = action;
-        let {name:userId} = userInfo;
-        let {data:orderData} = state;
-        let list = orderData[userId];
-        if(!list){
-            orderData[userId] = list = [];
-        }
-        let {name:shopName,id:shopId,list:foodList} = data;
+        let {userInfo,shopData,list:foodList} = action;
+        let {data,createId} = state;
+        let list = wt.getValue(data,userInfo.id,[]);
+        let {name:shopName,id:shopId} = shopData;
         list.unshift({
-            id:+list[list.length - 1].id + 1,
+            id:createId,
             shopName,
             shopId,
             list:foodList,
             time:new Date().toFormatString()
         });
+        state.createId++;
+        state.createSuccess = true;
     },
     submitComment(state,action){
         let {data} = action;
-        let {orderId,userName} = data;
-        let orderData = state.data[userName].filter(item => +item.id === +orderId)[0];
+        let {orderId,userId} = data;
+        let orderData = state.data[userId].filter(item => +item.id === +orderId)[0];
         orderData.comment = true;
+    },
+    initOrderState(state,action){
+        state.createSuccess = false;
     }
 };

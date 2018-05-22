@@ -19,10 +19,18 @@ export const clearAlerInfo = () => {
 };
 
 
-export const createOrder = (userInfo,data) => {
+export const createOrder = (userInfo,shopData,list) => {
     return {
         type:'createOrder',
         userInfo,
-        data
+        shopData,
+        list
     }
 };
+
+
+export const initState = () => {
+    return {
+        type:'initOrderState'
+    }
+}

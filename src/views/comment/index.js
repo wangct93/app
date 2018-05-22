@@ -41,11 +41,12 @@ class Comment extends Component{
         </div>
     }
     submit(){
-        let {match,userInfo = {},history} = this.props;
+        let {match,userInfo,history} = this.props;
         let {score = 0} = this.state || {};
         let {shopId,orderId} = match.params;
         let content = this.refs.textarea.value;
         this.props.submitComment({
+            userId:userInfo.id,
             userName:userInfo.name,
             shopId,
             content,

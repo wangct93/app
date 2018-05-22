@@ -23,3 +23,13 @@ export const getAllPrice = (list) => {
         return ov + count * price;
     },0);
 };
+
+
+export const setDefaultPath = (list,path) => {
+    list = list.slice(0);
+    let index = list.indexOfFunc(item => item.path === path);
+    if(index !== -1){
+        list.unshift(list.splice(index,1)[0]);
+    }
+    return list;
+};

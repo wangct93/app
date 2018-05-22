@@ -38,7 +38,10 @@ export class OrderDetailView extends Component{
 
 class Order extends Component{
     render(){
-        let {shopData = {},shoppingCartData = {},match = {}} = this.props;
+        let {shopData,shoppingCartData = {},match = {},success} = this.props;
+        if(!shopData){
+            return <Redirect to="/home"/>;
+        }
         let id = match.params.id;
         let list = shoppingCartData[id] || [];
         let {name = '合适假的'} = shopData;
@@ -56,7 +59,6 @@ class Order extends Component{
                 value:'支付宝'
             }
         ];
-        let {success} = this.state || {};
         return <div className="page-flex order-container">
             <Header>下单</Header>
             {
@@ -81,14 +83,13 @@ class Order extends Component{
             }
         </div>
     }
+    componentWillUnmount(){
+        this.props.initState();
+    }
     createOrder(){
-        let {shopData = {name:'dads',id:1},shoppingCartData = {},match = {},info} = this.props;
-        let id = match.params.id;
-        let list = shoppingCartData[id] || [];
-        this.props.createOrder(info,wt.extend({list},shopData));
-        this.setState({
-            success:true
-        });
+        let {shoppingCartData = {},userInfo,shopData} = this.props;
+        let list = shoppingCartData[shopData.id] || [];
+        this.props.createOrder(userInfo,shopData,list);
     }
 }
 
@@ -136,18 +137,17 @@ class FoodList extends Component{
 
 class OrderList extends Component{
     render(){
-        let {data,user,history} = this.props;
-        let {info:userInfo} = user;
+        let {data,userInfo} = this.props;
         if(!userInfo){
-            history.push('/login');
-            return '';
+            return <Redirect to="/login"/>;
         }
-        data = data[userInfo.name] || [];
+        data = data[userInfo.id] || [];
         return <div className="page-flex orderlist-container">
             <Header>我的订单</Header>
             <div className="body">
-                <OrderListView data={data} userInfo={userInfo}/>
-
+                {
+                    data.length ? <OrderListView data={data} userInfo={userInfo}/> : <div className="alert-text">没有历史订单</div>
+                }
             </div>
         </div>
     }
@@ -195,12 +195,15 @@ class OrderListView extends Component{
     }
 }
 
-export const MyOrder = connect(state => wt.extend({},state.orderData,{
-    user:state.userData
-}))(OrderList);
+export const MyOrder = connect(state => wt.extend({
+    userInfo:state.userData.info
+},state.orderData))(OrderList);
 
-export default connect(state => wt.extend({},state.listData,state.userData),actions)(Order);
+export default connect(state => wt.extend({
+    userInfo:state.userData.info,
+    success:state.orderData.createSuccess
+},state.listData),actions)(Order);
 
 export const OrderDetail = connect(state => wt.extend({},state.orderData,{
-    user:state.userData
+    userInfo:state.userData
 }))(OrderDetailView);

@@ -1,14 +1,9 @@
 [
   {
     "id":1,
-    "name":"wangct",
-    "tel":12345678987,
-    "yzm":123456
-  },
-  {
-    "id":2,
-    "name":"chuitw",
-    "tel":98765432123,
-    "yzm":123456
+    "name":"admin",
+    "pwd":"1234",
+    "addr":"北一区30号",
+    "imgSrc":"img/user/userImg.jpg"
   }
 ]

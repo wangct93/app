@@ -4,6 +4,8 @@
 import {dispatch} from '../store';
 const wt = require('@util');
 let defaultState = {
+    cityId:17,
+    cityName:'杭州',
     hotList:[
         {
             id:1,
@@ -72,6 +74,5 @@ let reducer = {
             city,
             cityId
         });
-        history.back();
     }
 };

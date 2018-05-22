@@ -16,12 +16,16 @@ const {Search} = Input;
 
 class Home extends Component{
     render(){
-        let {city = '请选择',menuData = [],czyhData = []} = this.props;
-
+        let {homeData,cityData} = this.props;
+        let {cityName} = cityData;
+        let {menuData = [],czyhData = []} = homeData;
+        if(!cityName){
+            return <Redirect to="/city"/>
+        }
         return <div className="page-flex home-container">
             <Header back={false}>
                 <Link to="/city" className="i-btn i-btn-right">
-                    <span>{city}</span>
+                    <span>{cityName}</span>
                     <Icon type="down"/>
                 </Link>
                 <div className="search-box">
@@ -72,7 +76,7 @@ class MenuBox extends Component{
     }
 }
 
-export default connect(state => wt.extend({
-    city:state.cityData.city,
-    cityId:state.cityData.cityId,
-},state.homeData))(Home);
+export default connect(state => ({
+    cityData:state.cityData,
+    homeData:state.homeData
+}))(Home);

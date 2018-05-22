@@ -14,16 +14,23 @@ import * as actions from '@/store/city/action';
 
 class City extends Component{
     render(){
-        let {hotList = [],city = '',cityId = '',selectCity} = this.props;
+        let {hotList = [],cityId,cityName = ''} = this.props;
+        if(cityId && cityId === this.cityId){
+            return <Redirect to="/home"/>;
+        }
         return <div className="page-flex city-container">
             <Header>
                 <span>选择城市</span>
             </Header>
             <div className="body">
-                <h2 className="city-name">{city}</h2>
-                <Box click={selectCity} title="热门城市" cityId={cityId} data={hotList}/>
+                <h2 className="city-name">{cityName}</h2>
+                <Box click={this.click.bind(this)} title="热门城市" cityId={cityId} data={hotList}/>
             </div>
         </div>
+    }
+    click(data){
+        this.props.selectCity(data);
+        this.cityId = data.id;
     }
 }
 

@@ -19,13 +19,13 @@ const {TabPane} = Tabs;
 class UserBox extends Component{
     render(){
         let {info,viewData} = this.props;
-        let {name} = info;
+        let {name,imgSrc} = info;
         return <div className="page-flex user-container">
             <Header>我的</Header>
             <div className="body">
                 <div className="user-box">
                     <div className="img-box-fit">
-                        <img src="img/1.jpg"/>
+                        <img src={imgSrc}/>
                     </div>
                     <div className="info-box">
                         <p className="text-name">{name}</p>

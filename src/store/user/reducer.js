@@ -3,22 +3,22 @@
  */
 import {dispatch} from '../store';
 let defaultState = {
-    info:{
-        name:'1234'
-    },
     viewData:[
         [
             {
                 iconCls:'left',
-                text:'收货地址'
+                text:'收货地址',
+                path:'addr'
             },
             {
                 iconCls:'left',
-                text:'我的收藏'
+                text:'我的收藏',
+                path:'mySc'
             },
             {
                 iconCls:'left',
-                text:'我的客服'
+                text:'我的客服',
+                path:'myKf'
             }
         ]
     ]
@@ -36,32 +36,21 @@ export let userData = (state = defaultState,action = {}) => {
 let reducer = {
     login(state,{data}){
         state.loadingLogin = true;
-        setTimeout(() => {
-            dispatch({
-                type:'loginEnd',
-                data:{
-                    name:data.name || data.tel,
-                    tel:data.tel
-                }
-            });
-        },500);
-        // $.ajax({
-        //     url:'json/user.json',
-        //     success(result){
-        //         let info = result.filter(item => +item.tel === +data.tel && +item.yzm === +data.yzm)[0];
-        //         dispatch({
-        //             type:'loginEnd',
-        //             data:info
-        //         });
-        //     }
-        // });
+        $.ajax({
+            url:'json/user.json',
+            success(result){
+                let info = result.filter(item => item.name === data.name && item.pwd === data.pwd)[0];
+                dispatch({
+                    type:'loginEnd',
+                    data:info
+                });
+            }
+        });
     },
     loginEnd(state,{data}){
         state.loadingLogin = false;
         if(data){
             state.info = data;
-            state.alertInfo = '登录成功';
-            state.logined = true;
         }else{
             state.alertInfo = '登录失败';
         }
