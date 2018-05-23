@@ -12,6 +12,8 @@ import Header from '../header';
 import MenuList from './lib/menuList';
 import Box from './lib/box';
 
+import * as actions from '@/store/home/action';
+
 const {Search} = Input;
 
 class Home extends Component{
@@ -22,7 +24,7 @@ class Home extends Component{
         if(!cityName){
             return <Redirect to="/city"/>
         }
-        return <div className="page-flex home-container">
+        return <div className="page-flex home-container" onClick={this.click.bind(this)}>
             <Header back={false}>
                 <Link to="/city" className="i-btn i-btn-right">
                     <span>{cityName}</span>
@@ -41,6 +43,9 @@ class Home extends Component{
                 <Box title="测试标题" data={czyhData} />
             </div>
         </div>
+    }
+    click(){
+        this.props.update();
     }
 }
 
@@ -79,4 +84,4 @@ class MenuBox extends Component{
 export default connect(state => ({
     cityData:state.cityData,
     homeData:state.homeData
-}))(Home);
+}),actions)(Home);

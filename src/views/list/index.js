@@ -57,7 +57,7 @@ class List extends Component{
                     </ul>
                     {
                         data.length ? <div className="footer-btn-box" ref="footer">
-                            <Button loading={hasMoreData}>{hasMoreData ? '加载更多' : '没有更多'}</Button>
+                            <Button loading={hasMoreData} disabled={true}>{hasMoreData ? '加载更多' : '没有更多'}</Button>
                         </div> : ''
                     }
                 </div>
@@ -75,15 +75,15 @@ class List extends Component{
         $(scrollBox).bind('scroll',e => {
             let {loadingMoreData,data = [],dataTotal = 0} = this.props;
             let {footer} = this.refs;
-            let disabledStaus = scrollBox.disabledStaus;
+            let disabledStatus = scrollBox.disabledStatus;
             if(loadingMoreData){
-                disabledStaus = false;
+                disabledStatus = false;
             }
-            if(!disabledStaus && !loadingMoreData && data.length < dataTotal){
+            if(!disabledStatus && !loadingMoreData && data.length < dataTotal){
                 let boxBottom = $(e.target).getRect().bottom;
                 let footerTop = $(footer).getRect().top;
                 if(footerTop < boxBottom){
-                    scrollBox.disabledStaus = true;
+                    scrollBox.disabledStatus = true;
                     loadMoreList();
                 }
             }

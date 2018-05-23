@@ -205,5 +205,7 @@ export let homeData = (state = defaultState,action = {}) => {
 };
 
 let reducer = {
-
+    homeUpdate(state,action){
+        state.name = 'wangct';
+    }
 };

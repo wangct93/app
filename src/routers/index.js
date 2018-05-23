@@ -15,7 +15,10 @@ import Login from '../views/login';
 import {setDefaultPath} from '../computes/compute';
 
 
-export default connect(state => state)(({routerData,userData}) => {
+export default connect(state => ({
+    routerData:state.routerData,
+    userData:state.userData
+}))(({routerData,userData}) => {
     let {list,footerList,defaultPath} = routerData;
     let {info} = userData;
     list = info ? list : [
