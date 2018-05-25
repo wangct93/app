@@ -4,6 +4,13 @@
 import {dispatch} from '../store';
 import userList from '@/json/user.json';
 let defaultState = {
+    info:{
+        "id":1,
+        "name":"admin",
+        "pwd":"1234",
+        "addr":"北一区30号",
+        "imgSrc":"img/user/userImg.jpg"
+    },
     viewData:[
         [
             {

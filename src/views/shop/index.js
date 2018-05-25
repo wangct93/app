@@ -18,11 +18,10 @@ const {TabPane} = Tabs;
 
 class Shop extends Component{
     render(){
-        let {shopData = {},shopping,shoppingCartData = {},commentData = []} = this.props;
+        let {shopData = {},shopping,shoppingCartData = {},comment = []} = this.props;
         let {name,score,intro,averPrice,foodData = [],id} = shopData;
         let foodList = this.formatFoodData(foodData);
         let shoppingCart = shoppingCartData[id] || [];
-        let commentList = commentData[id] || [];
         let {foodActiveIndex = 0} = this.state || {};
         return <div className="page-flex shop-container">
             <Header>商户信息</Header>
@@ -62,9 +61,9 @@ class Shop extends Component{
                         </TabPane>
                         <TabPane tab="评论" key="2">
                             {
-                                commentList.length ? <ul className="comment-list">
+                                comment.length ? <ul className="comment-list">
                                     {
-                                        commentList.map((item,i) => {
+                                        comment.map((item,i) => {
                                             let {userName,score,content} = item;
                                             return <li key={i}>
                                                 <p>

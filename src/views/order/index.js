@@ -17,18 +17,17 @@ import {getAllPrice} from '@/computes/compute';
 
 export class OrderDetailView extends Component{
     render(){
-        let {match,data} = this.props;
-        let {userId,id} = match.params;
-        data = data[userId].filter(item => +item.id === +id)[0];
-        let {shopName,list} = data;
+        let {match,list} = this.props;
+        let data = list.filter(item => +item.id === +match.params.id)[0] || {};
+        let {shopName,list:foodList = []} = data;
         return <div className="page-flex order-container">
             <Header>订单详情</Header>
             <div className="body">
                 <div className="food-box">
                     <div className="order-header">{shopName}</div>
-                    <FoodList data={list} />
+                    <FoodList data={foodList} />
                     <div className="text-price-box">
-                        实付 ￥{getAllPrice(list)}
+                        实付 ￥{getAllPrice(foodList)}
                     </div>
                 </div>
             </div>
@@ -137,16 +136,13 @@ class FoodList extends Component{
 
 class OrderList extends Component{
     render(){
-        let {data,userInfo} = this.props;
-        if(!userInfo){
-            return <Redirect to="/login"/>;
-        }
-        data = data[userInfo.id] || [];
+        let {list,userInfo} = this.props;
+        list = list.filter(item => +item.userId === +userInfo.id);
         return <div className="page-flex orderlist-container">
             <Header>我的订单</Header>
             <div className="body">
                 {
-                    data.length ? <OrderListView data={data} userInfo={userInfo}/> : <div className="alert-text">没有历史订单</div>
+                    list.length ? <OrderListView data={list} userInfo={userInfo}/> : <div className="alert-text">没有历史订单</div>
                 }
             </div>
         </div>
@@ -159,7 +155,9 @@ class OrderListView extends Component{
             {
                 data.map((item,i) => {
                     let {shopName,list,time,id,shopId,comment} = item;
-                    return <li key={i} onClick={this.toDetail.bind(this,userInfo.name,id)}>
+                    return <li key={i} onClick={() => {
+                        location.hash = `/orderDetail/${id}`
+                    }}>
                         <div className="order-header">
                             <div className="img-box-fit">
                                 <img src="img/1.jpg" />
@@ -186,9 +184,6 @@ class OrderListView extends Component{
             }
         </ul>
     }
-    toDetail(userName,id){
-        location.hash = `/orderDetail/${userName}/${id}`;
-    }
     comment(shopId,shopName,id,e){
         location.hash = `/comment/${shopId}/${shopName}/${id}`;
         e.stopPropagation();
@@ -204,6 +199,4 @@ export default connect(state => wt.extend({
     success:state.orderData.createSuccess
 },state.listData),actions)(Order);
 
-export const OrderDetail = connect(state => wt.extend({},state.orderData,{
-    userInfo:state.userData
-}))(OrderDetailView);
+export const OrderDetail = connect(state => state.orderData)(OrderDetailView);

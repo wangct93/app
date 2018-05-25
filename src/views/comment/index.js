@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-import {Icon,Button,Rate} from 'antd';
+import {Icon,Button,Rate,Modal} from 'antd';
 
 import * as actions from '@/store/list/action';
 
@@ -16,12 +16,16 @@ import {getAllPrice} from '@/computes/compute';
 
 class Comment extends Component{
     render(){
-        let {match} = this.props;
-        let {shopName} = match.params;
-        let {score = 0} = this.state || {};
+        let {score = 0,message} = this.state || {};
+        let {shopName} = this.getOrderInfo();
         return <div className="page-flex comment-container">
             <Header>评论</Header>
             <div className="body">
+                <Modal title="提示" visible={!!message} footer={<Button onClick={() => {
+                    this.setState({
+                        message:false
+                    })
+                }}>确定</Button>}>{message}</Modal>
                 <div className="shop-info">
                     <div className="img-box-fit">
                         <img src="img/1.jpg" />
@@ -41,26 +45,35 @@ class Comment extends Component{
         </div>
     }
     submit(){
-        let {match,userInfo,history} = this.props;
-        let {score = 0} = this.state || {};
-        let {shopId,orderId} = match.params;
-        let content = this.refs.textarea.value;
-        this.props.submitComment({
-            userId:userInfo.id,
-            userName:userInfo.name,
-            shopId,
-            content,
-            score,
-            orderId
-        });
-        history.goBack();
+        let {score} = this.state || {};
+        if(wt.isUndefined(score)){
+            this.setState({
+                message:'请为本次用餐体验打分！'
+            });
+        }else{
+            let {history} = this.props;
+            let data = this.getOrderInfo();
+            let content = this.refs.textarea.value;
+            let {userId,userName,shopId,id} = data;
+            this.props.submitComment({
+                userId,
+                userName,
+                shopId,
+                content,
+                score,
+                orderId:id
+            });
+            history.goBack();
+        }
     }
     setScore(v){
         this.setState({
             score:v
         });
     }
+    getOrderInfo(){
+        let {match,list = []} = this.props;
+        return list.filter(item => +item.id === +match.params.orderId)[0] || {};
+    }
 }
-export default connect(state => ({
-    userInfo:state.userData.info
-}),actions)(Comment);
+export default connect(state => state.orderData,actions)(Comment);

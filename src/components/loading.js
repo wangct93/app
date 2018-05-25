@@ -8,7 +8,9 @@ import {Provider, connect} from 'react-redux';
 
 export default props => {
     let {message = '数据加载中......',show} = props;
-    return show ? <div className="loading-box">
+    return <div className="loading-box" style={{
+        display:show ? 'flex' : 'none'
+    }}>
         <div className="loading-message">{message}</div>
-    </div> : '';
+    </div>;
 }

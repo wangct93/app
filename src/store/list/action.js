@@ -4,7 +4,7 @@
 
 
 
-export let loadMoreList = params => {
+export let loadMoreList = () => {
     return {
         type:'loadMoreList'
     }
@@ -20,10 +20,10 @@ export let shopping = (isPlus,data) => {
     }
 };
 
-export const getShopData = id => {
+export const getShopData = shopId => {
     return {
         type:'getShopData',
-        id
+        shopId
     }
 };
 

@@ -51,11 +51,11 @@ let defaultState = {
             component:User
         },
         {
-            path:'/orderDetail/:userId/:id',
+            path:'/orderDetail/:id',
             component:OrderDetail
         },
         {
-            path:'/comment/:shopId/:shopName/:orderId',
+            path:'/comment/:orderId',
             component:Comment
         }
     ],

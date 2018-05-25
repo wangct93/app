@@ -12,7 +12,7 @@ import {Form,Input,Icon,Button,Checkbox,Modal} from 'antd';
 const FormItem = Form.Item;
 
 import * as actions from '@/store/user/action';
-import LoadingBox from '@/components/loadingBox';
+import Loading from '@/components/loading';
 
 
 class LoginBox extends Component{
@@ -21,7 +21,7 @@ class LoginBox extends Component{
         return <div className="page-flex login-container">
             <Header>登录</Header>
             <div className="body">
-                <LoadingBox show={loadingLogin} message="登录中......"/>
+                <Loading show={loadingLogin} message="登录中......"/>
                 <FormView login={login} />
                 <Modal title="提示" visible={!!alertInfo} footer={<Button onClick={() => {
                     clearAlerInfo();

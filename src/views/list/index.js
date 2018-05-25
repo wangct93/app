@@ -11,7 +11,7 @@ import {Icon,Button,Input} from 'antd';
 import * as actions from '@/store/list/action';
 
 import Header from '../header';
-import LoadingBox from '@/components/loadingBox';
+import Loading from '@/components/loading';
 
 
 const {Search} = Input;
@@ -21,8 +21,7 @@ import {getDistance,getPrice} from '@/computes/compute';
 
 class List extends Component{
     render(){
-        let {data = [],loadingShopList = true,dataTotal = 0,getShopDataError} = this.props;
-        let hasMoreData = data.length < dataTotal;
+        let {data = [],loadingShopList = true,dataTotal = 0,getShopDataError,hasMoreData} = this.props;
         return <div className="page-flex list-container">
             <Header>
                 <div className="search-box">
@@ -30,7 +29,7 @@ class List extends Component{
                 </div>
             </Header>
             <div className="body fit">
-                <LoadingBox show={loadingShopList}/>
+                <Loading show={loadingShopList}/>
                 <div className="fit overflow-auto" ref="scrollBox">
                     <ul className="shop-list" ref="list">
                         {
