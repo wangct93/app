@@ -21,11 +21,13 @@ import {getDistance,getPrice} from '@/computes/compute';
 
 class List extends Component{
     render(){
-        let {data = [],loadingShopList = true,dataTotal = 0,getShopDataError,hasMoreData} = this.props;
+        let {data = [],loadingShopList = true,total = 0,match} = this.props;
+        let {keyword = match.params.keyword} = this.state || {};
+        let hasMoreData = data.length < total;
         return <div className="page-flex list-container">
             <Header>
                 <div className="search-box">
-                    <Search />
+                    <Search onChange={this.inputChange.bind(this)} value={keyword} onSearch={this.search.bind(this)}/>
                 </div>
             </Header>
             <div className="body fit">
@@ -72,13 +74,13 @@ class List extends Component{
         let {scrollBox} = this.refs;
         let {loadMoreList,scrollTop = 0,data = []} = this.props;
         $(scrollBox).bind('scroll',e => {
-            let {loadingMoreData,data = [],dataTotal = 0} = this.props;
+            let {loadingMoreData,data = [],total = 0} = this.props;
             let {footer} = this.refs;
             let disabledStatus = scrollBox.disabledStatus;
             if(loadingMoreData){
-                disabledStatus = false;
+                scrollBox.disabledStatus = false;
             }
-            if(!disabledStatus && !loadingMoreData && data.length < dataTotal){
+            if(!disabledStatus && !loadingMoreData && data.length < total){
                 let boxBottom = $(e.target).getRect().bottom;
                 let footerTop = $(footer).getRect().top;
                 if(footerTop < boxBottom){
@@ -92,15 +94,25 @@ class List extends Component{
             this.getData();
         }
     }
-    getData(){
+    getData(keyword){
         let {match = {},getShopList} = this.props;
         let {params = {}} = match;
-        getShopList(params.type);
+        keyword = wt.isUndefined(keyword) ? params.keyword : keyword;
+        getShopList(params.type,keyword);
     }
     toShopDetail(data){
         let {saveScrollTop,history} = this.props;
         saveScrollTop(this.refs.scrollBox.scrollTop);
         history.push(`/shop/${data.id}`);
+    }
+    inputChange(e){
+        let value = e.target.value;
+        this.setState({
+            keyword:value
+        });
+    }
+    search(value){
+        this.getData(value);
     }
 }
 

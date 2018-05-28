@@ -6,22 +6,21 @@ import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon} from 'antd';
 
-export default ({data}) => {
+export default ({data,click}) => {
     return <ul className="menu-list">
         {
             data.map((item,i) => {
-                return <Item key={i} data={item} />
+                return <Item click={click} key={i} data={item} />
             })
         }
     </ul>
 }
 
 const Item = props => {
-    let {iconCls,path,text} = props.data || {};
-    return <li>
-        <Link className="block" to={`/list${path}`}>
-            <Icon type={iconCls}/>
-            <p>{text}</p>
-        </Link>
+    let {click,data = {}} = props;
+    let {iconCls,path,text} = data;
+    return <li onClick={click.bind(this,path)}>
+        <Icon type={iconCls}/>
+        <p>{text}</p>
     </li>
 };

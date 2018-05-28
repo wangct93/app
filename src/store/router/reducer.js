@@ -23,11 +23,11 @@ let defaultState = {
             component:City
         },
         {
-            path:'/list/:type',
+            path:'/list/:type/:keyword?',
             component:List
         },
         {
-            path:'/shop/:id',
+            path:'/shop/:id/:show?',
             component:Shop
         },
         // {

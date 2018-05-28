@@ -33,4 +33,12 @@ export const initState = () => {
     return {
         type:'initOrderState'
     }
-}
+};
+
+
+export const againOrder = data => {
+    return {
+        type:'againOrder',
+        data
+    }
+};

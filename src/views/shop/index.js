@@ -18,11 +18,12 @@ const {TabPane} = Tabs;
 
 class Shop extends Component{
     render(){
-        let {shopData = {},shopping,shoppingCartData = {},comment = []} = this.props;
+        let {shopData = {},shopping,shoppingCartData = {},comment = [],match} = this.props;
         let {name,score,intro,averPrice,foodData = [],id} = shopData;
         let foodList = this.formatFoodData(foodData);
         let shoppingCart = shoppingCartData[id] || [];
         let {foodActiveIndex = 0} = this.state || {};
+        comment = comment.filter(item => item.shopId === id);
         return <div className="page-flex shop-container">
             <Header>商户信息</Header>
             <div className="body">
@@ -33,7 +34,7 @@ class Shop extends Component{
                     <div className="info-box">
                         <h2>{name}</h2>
                         <div className="score-line">
-                            <Rate disabled={true} value={score}/>
+                            <Rate allowHalf disabled={true} value={score}/>
                             <span className="shop-aver-price">￥{averPrice}</span>
                         </div>
                         <p>{intro}</p>
@@ -71,7 +72,7 @@ class Shop extends Component{
                                                     <span>{userName}</span>
                                                 </p>
                                                 <div>
-                                                    <Rate disabled={true} value={score} />
+                                                    <Rate allowHalf disabled={true} value={score} />
                                                 </div>
                                                 <p>{content}</p>
                                             </li>
@@ -82,7 +83,7 @@ class Shop extends Component{
                         </TabPane>
                     </Tabs>
                 </div>
-                <ShoppingFooter shoppingCart={shoppingCart}  shopping={shopping} data={shopData}/>
+                <ShoppingFooter defaultExpand={!!match.params.show} shoppingCart={shoppingCart}  shopping={shopping} data={shopData}/>
             </div>
         </div>
     }
@@ -182,9 +183,9 @@ class TvBox extends Component{
 
 class ShoppingFooter extends Component{
     render(){
-        let {listHeight = 0} = this;
-        let {show} = this.state || {};
-        let {shoppingCart = [],shopping,data,pay} = this.props;
+        let {shoppingCart = [],shopping,data,pay,defaultExpand} = this.props;
+        let {show = defaultExpand,elem,listHeight:defaultListHeight} = this.state || {};
+        let {listHeight = defaultListHeight} = this;
         let {qsPrice = 20,psPrice = 2.5} = data;
         let price = shoppingCart.reduce((v,item) => {
             return v + item.price * item.count;
@@ -201,9 +202,7 @@ class ShoppingFooter extends Component{
                     }
                 </div>
                 {
-                    price >= qsPrice ? <Link to={`/order/${data.id}`}>
-                        <Button type="primary" size="small">下单</Button>
-                    </Link> : ''
+                    price >= qsPrice ? <Link className="pay-btn" to={`/order/${data.id}`}>下单</Link> : ''
                 }
             </div>
             <div className="shopping-cart-view" style={{
@@ -225,21 +224,23 @@ class ShoppingFooter extends Component{
                     }
                 </ul>
             </div>
-        </div>,this.elem)
+        </div>,elem)
     }
     componentWillMount(){
         let div = document.createElement('div');
         $('body').append(div);
-        this.elem = div;
-    }
-    componentDidMount(){
-        this.setListHeight();
+        this.setState({
+            elem:div,
+            show:this.props.defaultExpand
+        });
     }
     componentDidUpdate(){
-        this.setListHeight();
+        let {show} = this.state || {};
+        let listElem = this.refs.list;
+        listElem.parentNode.style.height = show ? listElem.offsetHeight + 'px' : 0;
     }
     componentWillUnmount(){
-        $(this.elem).remove();
+        $(this.state.elem).remove();
     }
     showOrHide(){
         let {show} = this.state || {};
@@ -251,10 +252,6 @@ class ShoppingFooter extends Component{
         if($(e.target).hasClass('shopping-cart-container')){
             this.showOrHide();
         }
-        // HashRouter.push('/dd');
-    }
-    setListHeight(){
-        this.listHeight = this.refs.list.offsetHeight;
     }
 }
 

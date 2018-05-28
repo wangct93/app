@@ -24,40 +24,46 @@ class Home extends Component{
         if(!cityName){
             return <Redirect to="/city"/>
         }
-        return <div className="page-flex home-container" onClick={this.click.bind(this)}>
+        return <div className="page-flex home-container">
             <Header back={false}>
                 <Link to="/city" className="i-btn i-btn-right">
                     <span>{cityName}</span>
                     <Icon type="down"/>
                 </Link>
                 <div className="search-box">
-                    <Search placeholder="输入关键词查询"/>
+                    <Search placeholder="输入关键词查询" onSearch={this.search.bind(this)}/>
                 </div>
                 <Link to="/login" className="user-box">
                     <Icon type="user"/>
                 </Link>
             </Header>
             <div className="body">
-                <MenuBox data={menuData}/>
+                <MenuBox click={this.click.bind(this)} data={menuData}/>
                 <div className="mgb25" />
                 <Box title="测试标题" data={czyhData} />
             </div>
         </div>
     }
-    click(){
-        this.props.update();
+    search(value){
+        let {history} = this.props;
+        history.push('/list/all/' + value);
+    }
+    click(path){
+        let {history,clearShopList} = this.props;
+        clearShopList();
+        history.push('/list' + path);
     }
 }
 
 class MenuBox extends Component{
     render(){
-        let {data} = this.props;
+        let {data,click} = this.props;
         let contentList = [];
         let roungList = [];
         let {index = 0} = this.state || {};
 
         data.forEach((item,i) => {
-            contentList.push(<MenuList data={item} key={i}/>);
+            contentList.push(<MenuList click={click} data={item} key={i}/>);
             roungList.push(<i className={index === i ? 'active' : ''} key={i} onClick={this.change.bind(this,i)}/>);
         });
         return <div className="menu-wrap" ref="box">

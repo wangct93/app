@@ -34,7 +34,7 @@ class Comment extends Component{
                 </div>
                 <div className="score-box">
                     <h2>这次用餐体验满意吗？</h2>
-                    <Rate value={score} onChange={this.setScore.bind(this)}/>
+                    <Rate allowHalf value={score} onChange={this.setScore.bind(this)}/>
                 </div>
                 <div className="textarea-box">
                     <div className="text-title">评论信息</div>

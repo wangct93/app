@@ -5,7 +5,9 @@ import {dispatch} from '../store';
 import ShopData from '@/json/shop.json';
 import FoodData from '@/json/food.json'
 let defaultState = {
-
+    shoppingCartData:{
+        1:[{"id":1,"shopId":1,"name":"拿铁","price":180,"intro":"坐下来聊聊天","monthSold":6010,"keywords":"热销","count":2}]
+    }
 };
 
 export let listData = (state = defaultState,action = {}) => {
@@ -28,19 +30,28 @@ let reducer = {
     getShopList,
     getShopListEnd,
     submitComment,
-    createOrder
+    createOrder,
+    clearShopList,
+    againOrder
 };
+function againOrder(state,action){
+    let {data} = action;
+    let target = wt.getValue(state,'shoppingCartData',{});
+    target[data.shopId] = data.list;
+}
 
-
+function clearShopList(state,action){
+    state.data = [];
+}
 
 function loadMoreList(state,action){
     let {params = {}} = state;
     params.start += params.limit;
     state.loadingMoreData = true;
-    getShopListData(params,data => {
+    requestShopData(params,({rows}) => {
         dispatch({
             type:'loadShopListEnd',
-            data
+            data:rows
         });
     });
 }
@@ -49,8 +60,7 @@ function loadShopListEnd(state,action){
     let {data} = action;
     wt.extend(state,{
         loadingMoreData:false,
-        data:state.data.concat(data),
-        hasMoreData:!!data.length
+        data:state.data.concat(data)
     });
 }
 
@@ -82,8 +92,8 @@ function getShopData(state,action){
     state.loadingShopData = true;
     let {shopId} = action;
     let p1 = new Promise((cb,eb) => {
-        requestShopData({},data => {
-            let target = data.filter(item => +item.id === +shopId)[0] || {};
+        requestShopData({},({rows}) => {
+            let target = rows.filter(item => +item.id === +shopId)[0] || {};
             cb(target);
         });
     });
@@ -120,29 +130,34 @@ function saveShopListScrollTop(state,action){
 }
 
 function getShopList(state,action){
-    let {shopType:type} = action;
+    let {shopType:type,keyword} = action;
     let params = {
         start:0,
         limit:10,
-        type
+        type,
+        keyword
     };
     wt.extend(state,{
         loadingShopList:true,
         params
     });
-    requestShopData(params,data => {
+    requestShopData(params,({rows,total}) => {
         dispatch({
             type:'getShopListEnd',
-            data
+            data:rows,
+            total
         });
     });
+    console.log('load');
 }
 
 function getShopListEnd(state,action){
-    let {data = []} = action;
+    console.log('loadEnd');
+    let {data = [],total} = action;
     wt.extend(state, {
         data,
-        loadingShopList: false
+        loadingShopList: false,
+        total
     });
 }
 
@@ -160,16 +175,16 @@ function createOrder(state,action){
 
 function requestShopData(params = {},cb,eb){
     setTimeout(() => {
-        let {start,limit,type,keyword} = params;
+        let {start = 0,limit = 10,type,keyword} = params;
         let data = ShopData.filter(item => {
-            if((!type || item.type === type) && (!keyword || item.name.indexOf(keyword) !== -1)){
+            if((!type || type === 'all' || item.type === type) && (!keyword || item.name.indexOf(keyword) !== -1)){
                 return true;
             }
         });
-        if(start && limit){
-            data = data.slice(start,start + limit);
-        }
-        cb(data);
+        cb({
+            rows:data.slice(start,start + limit),
+            total:data.length
+        });
     },500);
 }
 

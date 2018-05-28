@@ -35,10 +35,11 @@ export const saveScrollTop = scrollTop => {
 };
 
 
-export const getShopList = shopType => {
+export const getShopList = (shopType,keyword) => {
     return {
         type:'getShopList',
-        shopType
+        shopType,
+        keyword
     }
 };
 

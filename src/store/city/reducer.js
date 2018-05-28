@@ -71,7 +71,7 @@ let reducer = {
     selectCity(state,action){
         let {text: city, id: cityId} = action.data;
         wt.extend(state,{
-            city,
+            cityName:city,
             cityId
         });
     }

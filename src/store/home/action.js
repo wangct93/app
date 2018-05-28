@@ -4,8 +4,8 @@
 
 
 
-export let update = (params) => {
+export const clearShopList = () => {
     return {
-        type:'homeUpdate'
+        type:'clearShopList'
     }
 };
