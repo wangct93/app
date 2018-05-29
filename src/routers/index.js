@@ -7,7 +7,7 @@ import {Provider,connect} from 'react-redux';
 import {HashRouter,withRouter,Route} from 'react-router-dom';
 
 
-import RouterSwitch from '../components/routerSwitch';
+import RouterSwitch from '@util/components/routerSwitch';
 
 import Footer from '../views/footer';
 import Login from '../views/login';

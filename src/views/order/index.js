@@ -44,20 +44,7 @@ class Order extends Component{
         let id = match.params.id;
         let list = shoppingCartData[id] || [];
         let {name = '合适假的'} = shopData;
-        let infoData = [
-            {
-                name:'配送地址',
-                value:'北一区45号'
-            },
-            {
-                name:'送达时间',
-                value:'尽快送达(21:22送达)'
-            },
-            {
-                name:'支付方式',
-                value:'支付宝'
-            }
-        ];
+        let infoData = this.getInfoData();
         return <div className="page-flex order-container">
             <Header>下单</Header>
             {
@@ -89,6 +76,38 @@ class Order extends Component{
         let {shoppingCartData = {},userInfo,shopData} = this.props;
         let list = shoppingCartData[shopData.id] || [];
         this.props.createOrder(userInfo,shopData,list);
+    }
+    getInfoData(){
+        let temp = [
+            {
+                field:'addr',
+                name:'配送地址',
+                defaultValue:'北一区45号'
+            },
+            {
+                field:'time',
+                name:'送达时间',
+                formatter(value,item){
+                    let time = new Date().diffMinutes(30).toFormatString('hh:mm');
+                    return '尽快送达（预计'+ time +'送达）';
+                }
+            },
+            {
+                field:'payType',
+                name:'支付方式',
+                defaultValue:'支付宝'
+            }
+        ];
+        let {userInfo} = this.props;
+        return temp.map(item => {
+            let {field,name,formatter,defaultValue} = item;
+            let value = userInfo[field];
+            value = wt.isFunction(formatter) ? formatter(value,item) : wt.isUndefined(value) ? defaultValue : value;
+            return {
+                name,
+                value
+            }
+        });
     }
 }
 

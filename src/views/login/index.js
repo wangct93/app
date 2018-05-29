@@ -12,7 +12,7 @@ import {Form,Input,Icon,Button,Checkbox,Modal} from 'antd';
 const FormItem = Form.Item;
 
 import * as actions from '@/store/user/action';
-import Loading from '@/components/loading';
+import Loading from '@util/components/loading';
 
 
 class LoginBox extends Component{

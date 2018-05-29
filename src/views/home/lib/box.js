@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
+import Img from '@util/components/img';
 
 export default class Box extends Component{
     render(){
@@ -16,11 +17,9 @@ export default class Box extends Component{
                     {
                         data.map(({title,intro,src,path},i) => {
                             return <li key={i}>
+                                <Img src={src} />
                                 <p className="box-item-title">{title}</p>
                                 <p className="box-item-text">{intro}</p>
-                                <div className="img-box">
-                                    <img src={src}/>
-                                </div>
                             </li>
                         })
                     }

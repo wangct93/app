@@ -11,7 +11,8 @@ import {Icon,Button,Input} from 'antd';
 import * as actions from '@/store/list/action';
 
 import Header from '../header';
-import Loading from '@/components/loading';
+import Loading from '@util/components/loading';
+import Img from '@util/components/img';
 
 
 const {Search} = Input;
@@ -38,9 +39,7 @@ class List extends Component{
                             data.map((item,i) => {
                                 let {id,src = 'img/1.jpg',distance = 120,averPrice = 20,soldCount,name,intro} = item;
                                 return <li key={i} onClick={this.toShopDetail.bind(this,item)}>
-                                    <div className="img-box">
-                                        <img src={src}/>
-                                    </div>
+                                    <Img src={src} />
                                     <div className="info-box">
                                         <p>
                                             <span className="shop-title">{name}</span>
