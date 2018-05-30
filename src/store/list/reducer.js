@@ -7,7 +7,14 @@ import FoodData from '@/json/food.json'
 let defaultState = {
     shoppingCartData:{
         1:[{"id":1,"shopId":1,"name":"拿铁","price":180,"intro":"坐下来聊聊天","monthSold":6010,"keywords":"热销","count":2}]
-    }
+    },
+    comment:[{"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":1},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":2},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":3},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":4},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":5},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":6},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":7}]
 };
 
 export let listData = (state = defaultState,action = {}) => {
@@ -32,8 +39,12 @@ let reducer = {
     submitComment,
     createOrder,
     clearShopList,
-    againOrder
+    againOrder,
+    clearShopData(state,action){
+        delete state.shopData;
+    }
 };
+
 function againOrder(state,action){
     let {data} = action;
     let target = wt.getValue(state,'shoppingCartData',{});
@@ -148,11 +159,9 @@ function getShopList(state,action){
             total
         });
     });
-    console.log('load');
 }
 
 function getShopListEnd(state,action){
-    console.log('loadEnd');
     let {data = [],total} = action;
     wt.extend(state, {
         data,

@@ -21,7 +21,7 @@ let reducer = {
     createOrder(state,action){
         let {userInfo,shopData,list:foodList} = action;
         let {list = []} = state;
-        let id = list.length ? +list[list.length - 1].id + 1 : 1;
+        let id = list.length ? +list[0].id + 1 : 1;
         list.unshift({
             id,
             shopName:shopData.name,

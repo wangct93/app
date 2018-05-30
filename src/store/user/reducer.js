@@ -4,13 +4,13 @@
 import {dispatch} from '../store';
 import userList from '@/json/user.json';
 let defaultState = {
-    info:{
-        "id":1,
-        "name":"admin",
-        "pwd":"1234",
-        "addr":"北一区30号",
-        "imgSrc":"img/user/userImg.jpg"
-    },
+    // info:{
+    //     "id":1,
+    //     "name":"admin",
+    //     "pwd":"1234",
+    //     "addr":"北一区30号",
+    //     "imgSrc":"img/user/userImg.jpg"
+    // },
     viewData:[
         [
             {
@@ -72,5 +72,8 @@ let reducer = {
     },
     clearLoginAlertInfo(state,action){
         state.alertInfo = '';
+    },
+    loginAlertInfo(state,action){
+        state.alertInfo = action.message;
     }
 };

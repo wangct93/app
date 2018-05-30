@@ -102,6 +102,7 @@ class List extends Component{
     toShopDetail(data){
         let {saveScrollTop,history} = this.props;
         saveScrollTop(this.refs.scrollBox.scrollTop);
+        this.props.clearShopData();
         history.push(`/shop/${data.id}`);
     }
     inputChange(e){

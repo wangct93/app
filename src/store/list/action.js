@@ -49,3 +49,9 @@ export const submitComment = data => {
         data
     }
 };
+
+export const clearShopData = () => {
+    return {
+        type:'clearShopData'
+    }
+};

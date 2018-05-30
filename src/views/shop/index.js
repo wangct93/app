@@ -6,11 +6,12 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-import {Icon,Button,Rate,Tabs} from 'antd';
+import {Icon,Button,Rate,Tabs,Spin} from 'antd';
 
 import * as actions from '@/store/list/action';
 
 import Header from '../header';
+import Loading from '@util/components/loading';
 
 import {getPrice} from '@/computes/compute';
 
@@ -18,7 +19,7 @@ const {TabPane} = Tabs;
 
 class Shop extends Component{
     render(){
-        let {shopData = {},shopping,shoppingCartData = {},comment = [],match} = this.props;
+        let {shopData = {},loadingShopData,shopping,shoppingCartData = {},comment = [],match} = this.props;
         let {name,score,intro,averPrice,foodData = [],id} = shopData;
         let foodList = this.formatFoodData(foodData);
         let shoppingCart = shoppingCartData[id] || [];
@@ -27,6 +28,7 @@ class Shop extends Component{
         return <div className="page-flex shop-container">
             <Header>商户信息</Header>
             <div className="body">
+                <Loading show={loadingShopData} />
                 <div className="shop-header">
                     <div className="img-box-fit">
                         <img src="img/1.jpg"/>
@@ -89,9 +91,10 @@ class Shop extends Component{
     }
     componentWillUpdate(props,state){
         let {match = {},getShopData} = props;
-        let {match:oldMatch = {}} = this.props;
-        if(oldMatch.params.id !== match.params.id){
-            getShopData(match.params.id);
+        let {id} = match.params;
+        let oldId =this.props.match.params.id;
+        if(id !== oldId){
+            getShopData(id);
         }
     }
     componentDidMount(){
