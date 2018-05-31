@@ -11,21 +11,19 @@ import {Form,Input,Icon,Button,Checkbox,Modal} from 'antd';
 
 const FormItem = Form.Item;
 
+import {alert} from '@/store/alert/action';
 import * as actions from '@/store/user/action';
 import Loading from '@util/components/loading';
 
 
 class LoginBox extends Component{
     render(){
-        let {loadingLogin,alert,alertInfo,login,clearAlerInfo,info,history} = this.props;
+        let {loadingLogin,alert,login} = this.props;
         return <div className="page-flex login-container">
             <Header>登录</Header>
             <div className="body">
                 <Loading show={loadingLogin} message="登录中......"/>
                 <FormView alert={alert} login={login} />
-                <Modal title="提示" visible={!!alertInfo} footer={<Button onClick={() => {
-                    clearAlerInfo();
-                }}>确定</Button>}>{alertInfo}</Modal>
             </div>
         </div>
     }
@@ -76,14 +74,16 @@ class Box extends Component{
                 }
             });
         }else{
-            this.props.alert('请先发送验证码！');
+            Modal.warning({
+                title:'提示',
+                content:'请发送验证码！'
+            });
         }
     }
     sendYzm(){
         this.setState({
             yzmTimeout:60
         });
-        let {validateFields} = this.props.form;
         let timer = setInterval(() => {
             let {yzmTimeout} = this.state || {};
             yzmTimeout--;

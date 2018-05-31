@@ -196,17 +196,17 @@ class OrderListView extends Component{
                         </div>
                         <div className="btn-box">
                             <Button type="primary" onClick={this.againOrder.bind(this,item)}>再来一单</Button>
-                            <Button type="primary" disabled={comment} onClick={this.comment.bind(this,shopId,shopName,id)}>{comment ? '已评价' : '评价'}</Button>
+                            <Button type="primary" disabled={comment} onClick={this.comment.bind(this,id)}>{comment ? '已评价' : '评价'}</Button>
                         </div>
                     </li>
                 })
             }
         </ul>
     }
-    comment(shopId,shopName,id,e){
+    comment(id,e){
         let {history} = this.props;
+        history.push(`/comment/${id}`);
         e.stopPropagation();
-        history.push(`/comment/${shopId}/${shopName}/${id}`);
     }
     againOrder(item,e){
         let {history,againOrder} = this.props;

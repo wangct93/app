@@ -17,10 +17,3 @@ export const clearAlerInfo = () => {
         type:'clearLoginAlertInfo'
     }
 };
-
-export const alert = message => {
-    return {
-        type:'loginAlertInfo',
-        message
-    }
-};

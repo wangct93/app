@@ -11,6 +11,7 @@ import RouterSwitch from '@util/components/routerSwitch';
 
 import Footer from '../views/footer';
 import Login from '../views/login';
+import Alert from '../views/alert';
 
 import {setDefaultPath} from '../computes/compute';
 
@@ -32,6 +33,7 @@ export default connect(state => ({
         <React.Fragment>
             <RouterSwitch data={list} />
             <FooterView data={footerList}/>
+            <Alert />
         </React.Fragment>
     </HashRouter>
 })

@@ -64,16 +64,6 @@ let reducer = {
     },
     loginEnd(state,{data}){
         state.loadingLogin = false;
-        if(data){
-            state.info = data;
-        }else{
-            state.alertInfo = '登录失败';
-        }
-    },
-    clearLoginAlertInfo(state,action){
-        state.alertInfo = '';
-    },
-    loginAlertInfo(state,action){
-        state.alertInfo = action.message;
+        state.info = data;
     }
 };
