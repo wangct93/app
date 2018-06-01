@@ -3,11 +3,38 @@
  */
 
 
-
-
-export let inputShop = data => {
+export const submitShop = data => {
     return {
-        type:'inputShop',
+        type:'submitInputShop',
+        data
+    }
+};
+
+export const deleteFood = index => {
+    return {
+        type:'deleteInputFood',
+        index
+    }
+};
+
+export const initState = () => {
+    return {
+        type:'initInputState'
+    }
+};
+
+
+
+export const getData = id => {
+    return {
+        type:'getInputShopData',
+        id
+    }
+};
+
+export const editFood = data => {
+    return {
+        type:'editInputFood',
         data
     }
 };

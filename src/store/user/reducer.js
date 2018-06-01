@@ -14,19 +14,24 @@ let defaultState = {
     viewData:[
         [
             {
+                iconCls:'plus',
+                text:'添加店铺',
+                path:'/input'
+            },
+            {
                 iconCls:'left',
                 text:'收货地址',
-                path:'addr'
+                path:'/dev'
             },
             {
                 iconCls:'left',
                 text:'我的收藏',
-                path:'mySc'
+                path:'/dev'
             },
             {
                 iconCls:'left',
                 text:'我的客服',
-                path:'myKf'
+                path:'/dev'
             }
         ]
     ]

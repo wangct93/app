@@ -34,27 +34,30 @@ class List extends Component{
             <div className="body fit">
                 <Loading show={loadingShopList}/>
                 <div className="fit overflow-auto" ref="scrollBox">
-                    <ul className="shop-list" ref="list">
-                        {
-                            data.map((item,i) => {
-                                let {id,src = 'img/1.jpg',distance = 120,averPrice = 20,soldCount,name,intro} = item;
-                                return <li key={i} onClick={this.toShopDetail.bind(this,item)}>
-                                    <Img src={src} />
-                                    <div className="info-box">
-                                        <p>
-                                            <span className="shop-title">{name}</span>
-                                            <span className="fr">{getDistance(distance)}</span>
-                                        </p>
-                                        <p>{intro}</p>
-                                        <p>
-                                            <span>人均 <span className="shop-price">{getPrice(averPrice)}</span></span>
-                                            <span className="fr">已售{soldCount}</span>
-                                        </p>
-                                    </div>
-                                </li>
-                            })
-                        }
-                    </ul>
+                    {
+                        data.length === 0 && loadingShopList === false ? <div className="alt-text">暂无数据</div>: <ul className="shop-list">
+                            {
+                                data.map((item,i) => {
+                                    let {id,imgSrc,distance = 120,averPrice = 20,soldCount,name,intro} = item;
+                                    return <li key={i} onClick={this.toShopDetail.bind(this,item)}>
+                                        <Img src={imgSrc} />
+                                        <div className="info-box">
+                                            <p>
+                                                <span className="shop-title">{name}</span>
+                                                <span className="fr">{getDistance(distance)}</span>
+                                            </p>
+                                            <p>{intro}</p>
+                                            <p>
+                                                <span>人均 <span className="shop-price">{getPrice(averPrice)}</span></span>
+                                                <span className="fr">已售{soldCount}</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                })
+                            }
+                        </ul>
+                    }
+
                     {
                         data.length ? <div className="footer-btn-box" ref="footer">
                             <Button loading={hasMoreData} disabled={true}>{hasMoreData ? '加载更多' : '没有更多'}</Button>

@@ -20,7 +20,7 @@ class LoginBox extends Component{
     render(){
         let {loadingLogin,alert,login} = this.props;
         return <div className="page-flex login-container">
-            <Header>登录</Header>
+            <Header back={false}>登录</Header>
             <div className="body">
                 <Loading show={loadingLogin} message="登录中......"/>
                 <FormView alert={alert} login={login} />
@@ -99,7 +99,7 @@ class Box extends Component{
     }
     componentDidMount(){
         // this.props.login({
-        //     name:'admin',
+        //     name:'user001',
         //     pwd:'1234'
         // });
     }

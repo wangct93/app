@@ -2,8 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
-import ShopData from '@/json/shop.json';
-import FoodData from '@/json/food.json'
+import {ShopData,FoodData} from '@/data';
 let defaultState = {
     shoppingCartData:{
         1:[{"id":1,"shopId":1,"name":"拿铁","price":180,"intro":"坐下来聊聊天","monthSold":6010,"keywords":"热销","count":2}]
@@ -42,6 +41,20 @@ let reducer = {
     againOrder,
     clearShopData(state,action){
         delete state.shopData;
+    },
+    submitInputShop(state,action){
+        let {id,foodList} = action.data;
+        let cartData = wt.getValue(state,'shoppingCartData',{});
+        let list = wt.getValue(cartData,id,[]);
+        for(let i = 0;i < list.length;i++){
+            let item = list[i];
+            let index = foodList.indexOfFunc(food => food.id === item.id);
+            if(index === -1){
+                list.splice(i--,1);
+            }else{
+                wt.extend(item,foodList[index]);
+            }
+        }
     }
 };
 
@@ -184,14 +197,17 @@ function createOrder(state,action){
 
 function requestShopData(params = {},cb,eb){
     setTimeout(() => {
-        let {start = 0,limit = 10,type,keyword} = params;
+        let {start,limit = 10,type,keyword} = params;
         let data = ShopData.filter(item => {
             if((!type || type === 'all' || item.type === type) && (!keyword || item.name.indexOf(keyword) !== -1)){
                 return true;
             }
         });
+        if(!wt.isUndefined(start)){
+            data = data.slice(start,start + limit)
+        }
         cb({
-            rows:data.slice(start,start + limit),
+            rows:data,
             total:data.length
         });
     },500);

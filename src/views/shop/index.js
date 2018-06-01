@@ -8,10 +8,12 @@ import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon,Button,Rate,Tabs,Spin} from 'antd';
 
+
 import * as actions from '@/store/list/action';
 
 import Header from '../header';
 import Loading from '@util/components/loading';
+import Img from '@util/components/img';
 
 import {getPrice} from '@/computes/compute';
 
@@ -19,20 +21,23 @@ const {TabPane} = Tabs;
 
 class Shop extends Component{
     render(){
-        let {shopData = {},loadingShopData,shopping,shoppingCartData = {},comment = [],match} = this.props;
-        let {name,score,intro,averPrice,foodData = [],id} = shopData;
+        let {shopData = {},loadingShopData,shopping,shoppingCartData = {},comment = [],match,power} = this.props;
+        let {name,score,intro = '&nbsp;',averPrice,foodData = [],id,imgSrc} = shopData;
         let foodList = this.formatFoodData(foodData);
         let shoppingCart = shoppingCartData[id] || [];
         let {foodActiveIndex = 0} = this.state || {};
         comment = comment.filter(item => item.shopId === id);
         return <div className="page-flex shop-container">
-            <Header>商户信息</Header>
+            <Header>
+                <span>商户信息</span>
+                {
+                    power === 0 ? <Link className="hand-text" to={`/input/${id}`}>修改</Link> : ''
+                }
+            </Header>
             <div className="body">
                 <Loading show={loadingShopData} />
                 <div className="shop-header">
-                    <div className="img-box-fit">
-                        <img src="img/1.jpg"/>
-                    </div>
+                    <Img src={imgSrc} />
                     <div className="info-box">
                         <h2>{name}</h2>
                         <div className="score-line">
@@ -155,12 +160,10 @@ class TvBox extends Component{
             <ul className="tv-list">
                 {
                     list.map((item,i) => {
-                        let {name,intro,id,price} = item;
+                        let {name,intro,id,price,imgSrc} = item;
                         let count = filterData[id] ? filterData[id].count : 0;
                         return <li key={i}>
-                            <div className="img-box-fit">
-                                <img src="img/1.jpg"/>
-                            </div>
+                            <Img src={imgSrc} />
                             <div className="info-box">
                                 <h2>{name}</h2>
                                 <p className="text-intro">{intro}</p>
@@ -258,4 +261,4 @@ class ShoppingFooter extends Component{
     }
 }
 
-export default connect(state => state.listData,actions)(Shop);
+export default connect(state => wt.extend({power:state.userData.info ? state.userData.info.power : 0},state.listData),actions)(Shop);

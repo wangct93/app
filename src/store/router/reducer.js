@@ -11,6 +11,7 @@ import Input from '../../views/input';
 import Order,{MyOrder,OrderDetail} from '../../views/order';
 import User from '../../views/user';
 import Comment from '../../views/comment';
+import Dev from '../../views/developing';
 let defaultState = {
     defaultPath:'/home',
     list:[
@@ -35,7 +36,7 @@ let defaultState = {
         //     component:Login
         // },
         {
-            path:'/input',
+            path:'/input/:id?',
             component:Input
         },
         {
@@ -57,6 +58,10 @@ let defaultState = {
         {
             path:'/comment/:orderId',
             component:Comment
+        },
+        {
+            path:'/dev',
+            component:Dev
         }
     ],
     footerList:[
