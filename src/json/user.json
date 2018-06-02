@@ -4,6 +4,15 @@
     "name":"admin",
     "pwd":"1234",
     "addr":"北一区30号",
-    "imgSrc":"img/user/userImg.jpg"
+    "imgSrc":"img/user/userImg.jpg",
+    "power":0
+  },
+  {
+    "id":2,
+    "name":"user001",
+    "pwd":"1234",
+    "addr":"北二区30号",
+    "imgSrc":"img/user/userImg.jpg",
+    "power":10
   }
 ]

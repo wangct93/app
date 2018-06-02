@@ -5,11 +5,13 @@
     "intro":"南罗故乡店",
     "soldCount":2626,
     "type":"food",
-    "score":4.6,
-    "distance":2000,
-    "averPrice":12,
-    "qsPrice":15,
-    "psPrice":1.5
+    "score":5,
+    "distance":130,
+    "averPrice":60,
+    "qsPrice":30,
+    "psPrice":4.5,
+    "addr":"这里是哪里",
+    "imgSrc":"img/1.jpg"
   },
   {
     "id":2,
@@ -120,6 +122,17 @@
     "type":"food",
     "score":5,
     "distance":130,
+    "averPrice":60,
+    "qsPrice":20
+  },
+  {
+    "id":12,
+    "name":"北二京涮肉",
+    "intro":"海店第一",
+    "soldCount":2206,
+    "type":"cs",
+    "score":5,
+    "distance":1130,
     "averPrice":60,
     "qsPrice":20
   }

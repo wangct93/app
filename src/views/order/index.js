@@ -44,20 +44,7 @@ class Order extends Component{
         let id = match.params.id;
         let list = shoppingCartData[id] || [];
         let {name = '合适假的'} = shopData;
-        let infoData = [
-            {
-                name:'配送地址',
-                value:'北一区45号'
-            },
-            {
-                name:'送达时间',
-                value:'尽快送达(21:22送达)'
-            },
-            {
-                name:'支付方式',
-                value:'支付宝'
-            }
-        ];
+        let infoData = this.getInfoData();
         return <div className="page-flex order-container">
             <Header>下单</Header>
             {
@@ -89,6 +76,38 @@ class Order extends Component{
         let {shoppingCartData = {},userInfo,shopData} = this.props;
         let list = shoppingCartData[shopData.id] || [];
         this.props.createOrder(userInfo,shopData,list);
+    }
+    getInfoData(){
+        let temp = [
+            {
+                field:'addr',
+                name:'配送地址',
+                defaultValue:'北一区45号'
+            },
+            {
+                field:'time',
+                name:'送达时间',
+                formatter(value,item){
+                    let time = new Date().diffMinutes(30).toFormatString('hh:mm');
+                    return '尽快送达（预计'+ time +'送达）';
+                }
+            },
+            {
+                field:'payType',
+                name:'支付方式',
+                defaultValue:'支付宝'
+            }
+        ];
+        let {userInfo} = this.props;
+        return temp.map(item => {
+            let {field,name,formatter,defaultValue} = item;
+            let value = userInfo[field];
+            value = wt.isFunction(formatter) ? formatter(value,item) : wt.isUndefined(value) ? defaultValue : value;
+            return {
+                name,
+                value
+            }
+        });
     }
 }
 
@@ -136,13 +155,13 @@ class FoodList extends Component{
 
 class OrderList extends Component{
     render(){
-        let {list,userInfo} = this.props;
+        let {list,userInfo,history,againOrder} = this.props;
         list = list.filter(item => +item.userId === +userInfo.id);
         return <div className="page-flex orderlist-container">
             <Header>我的订单</Header>
             <div className="body">
                 {
-                    list.length ? <OrderListView data={list} userInfo={userInfo}/> : <div className="alert-text">没有历史订单</div>
+                    list.length ? <OrderListView againOrder={againOrder.bind(this)} history={history} data={list} userInfo={userInfo}/> : <div className="alert-text">没有历史订单</div>
                 }
             </div>
         </div>
@@ -150,7 +169,7 @@ class OrderList extends Component{
 }
 class OrderListView extends Component{
     render(){
-        let {data = [],userInfo} = this.props;
+        let {data = [],userInfo,history} = this.props;
         return <ul className="order-list">
             {
                 data.map((item,i) => {
@@ -176,23 +195,30 @@ class OrderListView extends Component{
                             <div className="price">￥{getAllPrice(list)}</div>
                         </div>
                         <div className="btn-box">
-                            <Button type="primary">再来一单</Button>
-                            <Button type="primary" disabled={comment} onClick={this.comment.bind(this,shopId,shopName,id)}>{comment ? '已评价' : '评价'}</Button>
+                            <Button type="primary" onClick={this.againOrder.bind(this,item)}>再来一单</Button>
+                            <Button type="primary" disabled={comment} onClick={this.comment.bind(this,id)}>{comment ? '已评价' : '评价'}</Button>
                         </div>
                     </li>
                 })
             }
         </ul>
     }
-    comment(shopId,shopName,id,e){
-        location.hash = `/comment/${shopId}/${shopName}/${id}`;
+    comment(id,e){
+        let {history} = this.props;
+        history.push(`/comment/${id}`);
         e.stopPropagation();
+    }
+    againOrder(item,e){
+        let {history,againOrder} = this.props;
+        e.stopPropagation();
+        againOrder(item);
+        history.push(`/shop/${item.shopId}/1`);
     }
 }
 
 export const MyOrder = connect(state => wt.extend({
     userInfo:state.userData.info
-},state.orderData))(OrderList);
+},state.orderData),actions)(OrderList);
 
 export default connect(state => wt.extend({
     userInfo:state.userData.info,

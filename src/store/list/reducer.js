@@ -2,10 +2,18 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
-import ShopData from '@/json/shop.json';
-import FoodData from '@/json/food.json'
+import {ShopData,FoodData} from '@/data';
 let defaultState = {
-
+    shoppingCartData:{
+        1:[{"id":1,"shopId":1,"name":"拿铁","price":180,"intro":"坐下来聊聊天","monthSold":6010,"keywords":"热销","count":2}]
+    },
+    comment:[{"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":1},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":2},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":3},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":4},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":5},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":6},
+        {"userId":1,"userName":"admin","shopId":1,"content":"","score":3.5,"orderId":1,"id":7}]
 };
 
 export let listData = (state = defaultState,action = {}) => {
@@ -28,19 +36,46 @@ let reducer = {
     getShopList,
     getShopListEnd,
     submitComment,
-    createOrder
+    createOrder,
+    clearShopList,
+    againOrder,
+    clearShopData(state,action){
+        delete state.shopData;
+    },
+    submitInputShop(state,action){
+        let {id,foodList} = action.data;
+        let cartData = wt.getValue(state,'shoppingCartData',{});
+        let list = wt.getValue(cartData,id,[]);
+        for(let i = 0;i < list.length;i++){
+            let item = list[i];
+            let index = foodList.indexOfFunc(food => food.id === item.id);
+            if(index === -1){
+                list.splice(i--,1);
+            }else{
+                wt.extend(item,foodList[index]);
+            }
+        }
+    }
 };
 
+function againOrder(state,action){
+    let {data} = action;
+    let target = wt.getValue(state,'shoppingCartData',{});
+    target[data.shopId] = data.list;
+}
 
+function clearShopList(state,action){
+    state.data = [];
+}
 
 function loadMoreList(state,action){
     let {params = {}} = state;
     params.start += params.limit;
     state.loadingMoreData = true;
-    getShopListData(params,data => {
+    requestShopData(params,({rows}) => {
         dispatch({
             type:'loadShopListEnd',
-            data
+            data:rows
         });
     });
 }
@@ -49,8 +84,7 @@ function loadShopListEnd(state,action){
     let {data} = action;
     wt.extend(state,{
         loadingMoreData:false,
-        data:state.data.concat(data),
-        hasMoreData:!!data.length
+        data:state.data.concat(data)
     });
 }
 
@@ -82,8 +116,8 @@ function getShopData(state,action){
     state.loadingShopData = true;
     let {shopId} = action;
     let p1 = new Promise((cb,eb) => {
-        requestShopData({},data => {
-            let target = data.filter(item => +item.id === +shopId)[0] || {};
+        requestShopData({},({rows}) => {
+            let target = rows.filter(item => +item.id === +shopId)[0] || {};
             cb(target);
         });
     });
@@ -120,29 +154,32 @@ function saveShopListScrollTop(state,action){
 }
 
 function getShopList(state,action){
-    let {shopType:type} = action;
+    let {shopType:type,keyword} = action;
     let params = {
         start:0,
         limit:10,
-        type
+        type,
+        keyword
     };
     wt.extend(state,{
         loadingShopList:true,
         params
     });
-    requestShopData(params,data => {
+    requestShopData(params,({rows,total}) => {
         dispatch({
             type:'getShopListEnd',
-            data
+            data:rows,
+            total
         });
     });
 }
 
 function getShopListEnd(state,action){
-    let {data = []} = action;
+    let {data = [],total} = action;
     wt.extend(state, {
         data,
-        loadingShopList: false
+        loadingShopList: false,
+        total
     });
 }
 
@@ -160,16 +197,19 @@ function createOrder(state,action){
 
 function requestShopData(params = {},cb,eb){
     setTimeout(() => {
-        let {start,limit,type,keyword} = params;
+        let {start,limit = 10,type,keyword} = params;
         let data = ShopData.filter(item => {
-            if((!type || item.type === type) && (!keyword || item.name.indexOf(keyword) !== -1)){
+            if((!type || type === 'all' || item.type === type) && (!keyword || item.name.indexOf(keyword) !== -1)){
                 return true;
             }
         });
-        if(start && limit){
-            data = data.slice(start,start + limit);
+        if(!wt.isUndefined(start)){
+            data = data.slice(start,start + limit)
         }
-        cb(data);
+        cb({
+            rows:data,
+            total:data.length
+        });
     },500);
 }
 

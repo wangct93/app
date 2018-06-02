@@ -6,11 +6,14 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-import {Icon,Button,Rate,Tabs} from 'antd';
+import {Icon,Button,Rate,Tabs,Spin} from 'antd';
+
 
 import * as actions from '@/store/list/action';
 
 import Header from '../header';
+import Loading from '@util/components/loading';
+import Img from '@util/components/img';
 
 import {getPrice} from '@/computes/compute';
 
@@ -18,23 +21,27 @@ const {TabPane} = Tabs;
 
 class Shop extends Component{
     render(){
-        let {shopData = {},shopping,shoppingCartData = {},comment = []} = this.props;
-        let {name,score,intro,averPrice,foodData = [],id} = shopData;
+        let {shopData = {},loadingShopData,shopping,shoppingCartData = {},comment = [],match,power} = this.props;
+        let {name,score,intro = '&nbsp;',averPrice,foodData = [],id,imgSrc} = shopData;
         let foodList = this.formatFoodData(foodData);
         let shoppingCart = shoppingCartData[id] || [];
         let {foodActiveIndex = 0} = this.state || {};
         comment = comment.filter(item => item.shopId === id);
         return <div className="page-flex shop-container">
-            <Header>商户信息</Header>
+            <Header>
+                <span>商户信息</span>
+                {
+                    power === 0 ? <Link className="hand-text" to={`/input/${id}`}>修改</Link> : ''
+                }
+            </Header>
             <div className="body">
+                <Loading show={loadingShopData} />
                 <div className="shop-header">
-                    <div className="img-box-fit">
-                        <img src="img/1.jpg"/>
-                    </div>
+                    <Img src={imgSrc} />
                     <div className="info-box">
                         <h2>{name}</h2>
                         <div className="score-line">
-                            <Rate disabled={true} value={score}/>
+                            <Rate allowHalf disabled={true} value={score}/>
                             <span className="shop-aver-price">￥{averPrice}</span>
                         </div>
                         <p>{intro}</p>
@@ -72,7 +79,7 @@ class Shop extends Component{
                                                     <span>{userName}</span>
                                                 </p>
                                                 <div>
-                                                    <Rate disabled={true} value={score} />
+                                                    <Rate allowHalf disabled={true} value={score} />
                                                 </div>
                                                 <p>{content}</p>
                                             </li>
@@ -83,15 +90,16 @@ class Shop extends Component{
                         </TabPane>
                     </Tabs>
                 </div>
-                <ShoppingFooter shoppingCart={shoppingCart}  shopping={shopping} data={shopData}/>
+                <ShoppingFooter defaultExpand={!!match.params.show} shoppingCart={shoppingCart}  shopping={shopping} data={shopData}/>
             </div>
         </div>
     }
     componentWillUpdate(props,state){
         let {match = {},getShopData} = props;
-        let {match:oldMatch = {}} = this.props;
-        if(oldMatch.params.id !== match.params.id){
-            getShopData(match.params.id);
+        let {id} = match.params;
+        let oldId =this.props.match.params.id;
+        if(id !== oldId){
+            getShopData(id);
         }
     }
     componentDidMount(){
@@ -152,12 +160,10 @@ class TvBox extends Component{
             <ul className="tv-list">
                 {
                     list.map((item,i) => {
-                        let {name,intro,id,price} = item;
+                        let {name,intro,id,price,imgSrc} = item;
                         let count = filterData[id] ? filterData[id].count : 0;
                         return <li key={i}>
-                            <div className="img-box-fit">
-                                <img src="img/1.jpg"/>
-                            </div>
+                            <Img src={imgSrc} />
                             <div className="info-box">
                                 <h2>{name}</h2>
                                 <p className="text-intro">{intro}</p>
@@ -183,9 +189,9 @@ class TvBox extends Component{
 
 class ShoppingFooter extends Component{
     render(){
-        let {listHeight = 0} = this;
-        let {show} = this.state || {};
-        let {shoppingCart = [],shopping,data,pay} = this.props;
+        let {shoppingCart = [],shopping,data,pay,defaultExpand} = this.props;
+        let {show = defaultExpand,elem,listHeight:defaultListHeight} = this.state || {};
+        let {listHeight = defaultListHeight} = this;
         let {qsPrice = 20,psPrice = 2.5} = data;
         let price = shoppingCart.reduce((v,item) => {
             return v + item.price * item.count;
@@ -202,9 +208,7 @@ class ShoppingFooter extends Component{
                     }
                 </div>
                 {
-                    price >= qsPrice ? <Link to={`/order/${data.id}`}>
-                        <Button type="primary" size="small">下单</Button>
-                    </Link> : ''
+                    price >= qsPrice ? <Link className="pay-btn" to={`/order/${data.id}`}>下单</Link> : ''
                 }
             </div>
             <div className="shopping-cart-view" style={{
@@ -226,21 +230,23 @@ class ShoppingFooter extends Component{
                     }
                 </ul>
             </div>
-        </div>,this.elem)
+        </div>,elem)
     }
     componentWillMount(){
         let div = document.createElement('div');
         $('body').append(div);
-        this.elem = div;
-    }
-    componentDidMount(){
-        this.setListHeight();
+        this.setState({
+            elem:div,
+            show:this.props.defaultExpand
+        });
     }
     componentDidUpdate(){
-        this.setListHeight();
+        let {show} = this.state || {};
+        let listElem = this.refs.list;
+        listElem.parentNode.style.height = show ? listElem.offsetHeight + 'px' : 0;
     }
     componentWillUnmount(){
-        $(this.elem).remove();
+        $(this.state.elem).remove();
     }
     showOrHide(){
         let {show} = this.state || {};
@@ -252,11 +258,7 @@ class ShoppingFooter extends Component{
         if($(e.target).hasClass('shopping-cart-container')){
             this.showOrHide();
         }
-        // HashRouter.push('/dd');
-    }
-    setListHeight(){
-        this.listHeight = this.refs.list.offsetHeight;
     }
 }
 
-export default connect(state => state.listData,actions)(Shop);
+export default connect(state => wt.extend({power:state.userData.info ? state.userData.info.power : 0},state.listData),actions)(Shop);

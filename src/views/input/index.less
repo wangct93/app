@@ -1,8 +1,70 @@
-@import '../../common/less/common.less';
+@import '../../less/common.less';
 
 
 .input-container{
     > .body{
         padding: 20px;
+    }
+    .alert-text-box{
+        text-align: center;
+        > a{
+            margin-left: 20px;
+        }
+    }
+}
+
+.form-horizontal{
+    .ant-form-item{
+        display: flex;
+    }
+    .ant-form-item-label{
+        width: 70px;
+        flex:0 0 auto;
+        text-align: right;
+        margin-right: 20px;
+        padding: 0;
+        line-height: 40px;
+        font-size: 0;
+    }
+    .ant-form-item-control-wrapper{
+        flex:1;
+    }
+    .ant-input{
+        height: 40px;
+    }
+    > .ant-btn{
+        width: 100%;
+    }
+    td{
+        font-size: 16px;
+    }
+    .list-header{
+        display: flex;
+        height: 40px;
+        .flex-center();
+        .list-title{
+            flex: 1;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td{
+        padding: 10px 5px;
+    }
+    .ant-table-tbody{
+        .img-box-full{
+            height: 40px;
+        }
+    }
+    .ant-table-wrapper{
+        background-color: #fff;
+        margin: 10px 0 20px 0;
+    }
+    .upload-box{
+        width: 120px;
+        .img-box-full{
+            height: 120px;
+        }
     }
 }

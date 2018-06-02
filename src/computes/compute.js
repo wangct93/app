@@ -33,3 +33,14 @@ export const setDefaultPath = (list,path) => {
     }
     return list;
 };
+
+
+export const onlyNumKeydown = e => {
+    let keyCode = e.keyCode;
+    let filters = [8,13,37,39];
+    if(keyCode > 47 && keyCode < 58 || keyCode > 95 && keyCode < 106 || filters.indexOf(keyCode) !== -1){
+
+    }else{
+        e.preventDefault();
+    }
+};

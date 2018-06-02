@@ -1,4 +1,4 @@
-@import "../../common/less/common";
+@import "../../less/common";
 
 .shop-container{
     > .body{
@@ -10,7 +10,7 @@
         display: flex;
         padding: 20px;
         background-color: #fff;
-        .img-box-fit{
+        .img-box-full{
             width: 120px;
             height: 120px;
         }
@@ -62,6 +62,7 @@
             text-align: center;
             border-top: 1px solid @borderColor;
             cursor: pointer;
+            .text-ellipsis();
             &:first-child{
                 border-top-width: 0;
             }
@@ -97,7 +98,7 @@
             align-items: center;
             padding: 10px;
             .border-bottom();
-            .img-box-fit{
+            .img-box-full{
                 width: 90px;
                 height: 90px;
             }
@@ -137,23 +138,24 @@
     z-index: 20;
     background-color: rgba(0,0,0,.4);
     .shop-footer{
+        @height:50px;
         display: flex;
         flex: 0 0 auto;
-        height: 50px;
+        height: @height;
         background-color: @shopFooterBgColor;
         color: #eee;
         align-items: center;
-        padding: 0 10px;
         .icon-box{
             position: relative;
-            height:50px;
-            line-height: 50px;
+            height:@height;
+            line-height: @height;
             width: 50px;
             text-align: center;
             top: -20px;
             border-radius: 50%;
             background-color: #eee;
             font-size: 0;
+            margin-left: 10px;
         }
         .anticon{
             font-size: 30px;
@@ -163,10 +165,22 @@
         .shop-price{
             flex: 1;
             text-align: right;
-            padding-right: 20px;
+            padding-right: 10px;
         }
         .shop-footer-text{
-            padding: 0 10px;
+            padding: 0 5px;
+            font-size: 12px;
+        }
+        .pay-btn{
+            height: @height;
+            line-height: @height;
+            padding: 0 22px 0 25px;
+            background-color: #40a9ff;
+            font-size: 16px;
+            letter-spacing: 3px;
+            &:hover{
+                background-color: #096dd9;
+            }
         }
     }
     &.mask-wrap{

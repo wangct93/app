@@ -11,21 +11,19 @@ import {Form,Input,Icon,Button,Checkbox,Modal} from 'antd';
 
 const FormItem = Form.Item;
 
+import {alert} from '@/store/alert/action';
 import * as actions from '@/store/user/action';
-import Loading from '@/components/loading';
+import Loading from '@util/components/loading';
 
 
 class LoginBox extends Component{
     render(){
-        let {loadingLogin,alertInfo,login,clearAlerInfo,info,history} = this.props;
+        let {loadingLogin,alert,login} = this.props;
         return <div className="page-flex login-container">
-            <Header>登录</Header>
+            <Header back={false}>登录</Header>
             <div className="body">
                 <Loading show={loadingLogin} message="登录中......"/>
-                <FormView login={login} />
-                <Modal title="提示" visible={!!alertInfo} footer={<Button onClick={() => {
-                    clearAlerInfo();
-                }}>确定</Button>}>{alertInfo}</Modal>
+                <FormView alert={alert} login={login} />
             </div>
         </div>
     }
@@ -45,27 +43,19 @@ class Box extends Component{
                         }
                     ]
                 })(
-                    <Input size="large" prefix={<Icon type="user" />} placeholder="输入用户名" />
+                    <Input size="large" prefix={<Icon type="user" />} placeholder="输入用户名（admin）" />
                 )}
             </FormItem>
             <FormItem required={true}>
                 {getFieldDecorator('pwd',{
                     rules:[
                         {
-                            validator:(rule,value,cb) => {
-                                let {yzmTimeout} = this.state || {};
-                                let message;
-                                if(!yzmTimeout){
-                                    message = '请发送验证！';
-                                }else if(!value){
-                                    message = '请输入验证码！';
-                                }
-                                cb(message);
-                            }
+                            required:true,
+                            message:'请输入验证码'
                         }
                     ]
                 })(
-                    <Input size="large" addonAfter={<Button onClick={this.sendYzm.bind(this)} disabled={yzmTimeout} size="large">{yzmTimeout ? `已发送（${yzmTimeout}）` : '发送验证码'}</Button>} prefix={<Icon type="key" />} placeholder="输入验证码" />
+                    <Input size="large" addonAfter={<Button onClick={this.sendYzm.bind(this)} disabled={yzmTimeout} size="large">{yzmTimeout ? `已发送（${yzmTimeout}）` : '发送验证码'}</Button>} prefix={<Icon type="key" />} placeholder="输入验证码（1234）" />
                 )}
             </FormItem>
             <Button size="large" type="primary" htmlType="submit">登录</Button>
@@ -76,11 +66,19 @@ class Box extends Component{
     }
     click(e){
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.props.login(values);
-            }
-        });
+        let {yzmTimeout = 0} = this.state || {};
+        if(yzmTimeout){
+            this.props.form.validateFields((err, values) => {
+                if (!err) {
+                    this.props.login(values);
+                }
+            });
+        }else{
+            Modal.warning({
+                title:'提示',
+                content:'请发送验证码！'
+            });
+        }
     }
     sendYzm(){
         this.setState({
@@ -96,13 +94,14 @@ class Box extends Component{
                 clearInterval(timer);
             }
         },1000);
+
         this.timer = timer;
     }
     componentDidMount(){
-        this.props.login({
-            name:'admin',
-            pwd:'1234'
-        });
+        // this.props.login({
+        //     name:'user001',
+        //     pwd:'1234'
+        // });
     }
 }
 

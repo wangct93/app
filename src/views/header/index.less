@@ -1,4 +1,4 @@
-@import '../../common/less/common.less';
+@import '../../less/common.less';
 
 .header{
     position: relative;
@@ -9,12 +9,20 @@
     color: #fff;
     height: 50px;
     padding: 0 10px 0 30px;
-    > .anticon-left{
+    > .anticon-left,
+    > .hand-text{
         position: absolute;
         left: 10px;
         top: 50%;
         margin-top: -8px;
         cursor: pointer;
         font-size: 16px;
+    }
+    .hand-text{
+        left: auto;
+        right: 10px;
+        height: 20px;
+        line-height: 20px;
+        margin-top: -10px;
     }
 }

@@ -1,4 +1,4 @@
-@import "../../common/less/common";
+@import "../../less/common";
 
 
 .home-container{
@@ -29,6 +29,7 @@
     }
     .box-ul{
         white-space: normal;
+        padding: 5px;
         > li{
             .inline();
             text-align: center;
@@ -36,8 +37,11 @@
             box-sizing: border-box;
             padding: 0 5px;
         }
-        .img-box{
+        .img-box-full{
             height: 100px;
+        }
+        p{
+            line-height: 30px;
         }
     }
 }
@@ -57,6 +61,7 @@
             font-size: 16px;
             margin-bottom: 10px;
             padding: 10px 0;
+            cursor: pointer;
         }
         p{
             line-height: 30px;

@@ -35,10 +35,11 @@ export const saveScrollTop = scrollTop => {
 };
 
 
-export const getShopList = shopType => {
+export const getShopList = (shopType,keyword) => {
     return {
         type:'getShopList',
-        shopType
+        shopType,
+        keyword
     }
 };
 
@@ -46,5 +47,11 @@ export const submitComment = data => {
     return {
         type:'submitComment',
         data
+    }
+};
+
+export const clearShopData = () => {
+    return {
+        type:'clearShopData'
     }
 };

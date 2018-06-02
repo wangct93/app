@@ -2,7 +2,6 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
-const wt = require('@util');
 let defaultState = {
     cityId:17,
     cityName:'杭州',
@@ -71,7 +70,7 @@ let reducer = {
     selectCity(state,action){
         let {text: city, id: cityId} = action.data;
         wt.extend(state,{
-            city,
+            cityName:city,
             cityId
         });
     }
