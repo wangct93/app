@@ -146,7 +146,7 @@ class Shop extends Component{
         let {foodContent} = this.refs;
         let $box = $(foodContent);
         let $target = $box.find('.tv-box').eq(index);
-        foodContent.scrollTop += $target.getRect().top - $box.getRect().top - 20;
+        foodContent.scrollTop += $target.getRect().top - $box.getRect().top - 10;
     }
 }
 

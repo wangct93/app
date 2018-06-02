@@ -203,12 +203,13 @@ function requestShopData(params = {},cb,eb){
                 return true;
             }
         });
+        let total = data.length;
         if(!wt.isUndefined(start)){
             data = data.slice(start,start + limit)
         }
         cb({
             rows:data,
-            total:data.length
+            total
         });
     },500);
 }

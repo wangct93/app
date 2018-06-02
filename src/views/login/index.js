@@ -66,7 +66,7 @@ class Box extends Component{
     }
     click(e){
         e.preventDefault();
-        let {yzmTimeout = 0} = this.state || {};
+        let {yzmTimeout = 1} = this.state || {};
         if(yzmTimeout){
             this.props.form.validateFields((err, values) => {
                 if (!err) {

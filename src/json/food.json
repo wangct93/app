@@ -15,7 +15,7 @@
     "price":12,
     "intro":"",
     "monthSold":255,
-    "keywords":["进店必买","热销"]
+    "keywords":"热销"
   },
   {
     "id":3,
@@ -51,7 +51,7 @@
     "price":14,
     "intro":"赞",
     "monthSold":204,
-    "keywords":["进店必买","热销"]
+    "keywords":"热销"
   },
   {
     "id":7,
