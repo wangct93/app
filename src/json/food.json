@@ -2,101 +2,101 @@
   {
     "id":1,
     "shopId":1,
-    "name":"拿铁",
-    "price":180,
-    "intro":"坐下来聊聊天",
-    "monthSold":6010,
+    "name":"脆皮鸡排",
+    "price":16.9,
+    "intro":"来自台湾的炸鸡，脆皮鸡排",
+    "monthSold":797,
     "keywords":"热销"
   },
   {
     "id":2,
     "shopId":1,
-    "name":"馥芮白",
-    "price":18,
-    "intro":"坐下",
-    "monthSold":600,
-    "keywords":"热销"
+    "name":"甘梅地瓜条",
+    "price":12,
+    "intro":"",
+    "monthSold":255,
+    "keywords":["进店必买","热销"]
   },
   {
     "id":3,
     "shopId":1,
-    "name":"美式黑咖啡",
-    "price":15,
-    "intro":"咖啡",
-    "monthSold":1600,
+    "name":"鲜味花枝丸",
+    "price":12,
+    "intro":"",
+    "monthSold":236,
     "keywords":"热销"
   },
   {
     "id":4,
     "shopId":1,
-    "name":"芝士",
-    "price":18,
-    "intro":"好吃",
-    "monthSold":100,
+    "name":"鸡锁骨",
+    "price":17.9,
+    "intro":"香酥鸡锁骨",
+    "monthSold":234,
     "keywords":"热销"
   },
   {
     "id":5,
     "shopId":1,
-    "name":"好吃芝士",
-    "price":28,
-    "intro":"第二船体",
-    "monthSold":300,
-    "keywords":"专题"
+    "name":"美味盐酥鸡",
+    "price":14,
+    "intro":"赞",
+    "monthSold":214,
+    "keywords":"热销"
   },
   {
     "id":6,
     "shopId":1,
-    "name":"好吃芝士",
-    "price":28,
-    "intro":"第二船体",
-    "monthSold":300,
-    "keywords":"专题"
+    "name":"无骨鸡柳",
+    "price":14,
+    "intro":"赞",
+    "monthSold":204,
+    "keywords":["进店必买","热销"]
   },
   {
     "id":7,
     "shopId":1,
-    "name":"好吃芝士",
-    "price":28,
-    "intro":"第二船体",
-    "monthSold":300,
-    "keywords":"专题"
+    "name":"红豆奶茶",
+    "price":12,
+    "intro":"赞",
+    "monthSold":150,
+    "keywords":"热销"
   },
   {
     "id":8,
     "shopId":1,
-    "name":"好吃芝士",
-    "price":28,
-    "intro":"第二船体",
-    "monthSold":300,
-    "keywords":"专题"
+    "name":"老长沙大香肠",
+    "price":15,
+    "intro":"网红大香肠 超级好吃",
+    "monthSold":78,
+    "keywords":"进店必买"
   },
   {
     "id":9,
     "shopId":1,
-    "name":"好吃芝士",
-    "price":28,
-    "intro":"第二船体",
-    "monthSold":300,
-    "keywords":"专题"
+    "name":"奥尔良烤全鸡",
+    "price":31.9,
+    "intro":"赞",
+    "monthSold":77,
+    "keywords":"进店必买"
   },
   {
     "id":10,
     "shopId":1,
-    "name":"好吃芝士",
-    "price":28,
-    "intro":"第二船体",
-    "monthSold":300,
-    "keywords":"专题"
+    "name":"鲜热牛奶",
+    "price":13,
+    "intro":"赞",
+    "monthSold":70,
+    "keywords":"进店必买"
   },
   {
     "id":11,
     "shopId":1,
-    "name":"好吃芝士",
-    "price":28,
-    "intro":"第二船体",
-    "monthSold":300,
-    "keywords":"专题"
+    "name":"特惠单人套餐",
+    "price":40,
+    "intro":"鸡排+甘梅地瓜条+红豆奶茶",
+    "monthSold":38,
+    "keywords":"进店必买"
   },
   {
     "id":12,

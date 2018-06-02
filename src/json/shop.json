@@ -1,36 +1,39 @@
 [
   {
     "id":1,
-    "name":"合宿人家",
+    "name":"甘传奇鸡排",
     "intro":"南罗故乡店",
-    "soldCount":606,
+    "soldCount":2626,
     "type":"food",
-    "score":5,
-    "distance":130,
-    "averPrice":60,
-    "qsPrice":30
+    "score":4.6,
+    "distance":2000,
+    "averPrice":12,
+    "qsPrice":15,
+    "psPrice":1.5
   },
   {
     "id":2,
-    "name":"漫漫火锅",
+    "name":"韩式炸鸡",
     "intro":"王府井",
-    "soldCount":1606,
+    "soldCount":2152,
     "type":"food",
-    "score":4,
-    "distance":1300,
-    "averPrice":60,
-    "qsPrice":20
+    "score":4.7,
+    "distance":1900,
+    "averPrice":19,
+    "qsPrice":25,
+    "psPrice":4.5
   },
   {
     "id":3,
-    "name":"北京涮肉",
+    "name":"豪堡汉堡",
     "intro":"海店",
-    "soldCount":206,
+    "soldCount":7332,
     "type":"food",
-    "score":5,
-    "distance":1130,
-    "averPrice":60,
-    "qsPrice":20
+    "score":4.7,
+    "distance":3300,
+    "averPrice":15,
+    "qsPrice":0,
+    "psPrice":2.5
   },
   {
     "id":4,

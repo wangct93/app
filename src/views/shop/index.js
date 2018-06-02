@@ -23,6 +23,7 @@ class Shop extends Component{
         let foodList = this.formatFoodData(foodData);
         let shoppingCart = shoppingCartData[id] || [];
         let {foodActiveIndex = 0} = this.state || {};
+        comment = comment.filter(item => item.shopId === id);
         return <div className="page-flex shop-container">
             <Header>商户信息</Header>
             <div className="body">
