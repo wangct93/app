@@ -12,9 +12,8 @@ import {Icon,Button,Rate,Tabs,Spin} from 'antd';
 import * as actions from '@/store/list/action';
 
 import Header from '../header';
-import Loading from '@util/components/loading';
-import Img from '@util/components/img';
-
+import {Img,Loading} from 'wt-reacts';
+import wt from 'wt-butil';
 import {getPrice} from '@/computes/compute';
 
 const {TabPane} = Tabs;

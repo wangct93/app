@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
+import wt from 'wt-butil';
 import {ShopData,FoodData} from '@/data';
 let defaultState = {
     shoppingCartData:{

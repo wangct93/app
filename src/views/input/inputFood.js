@@ -10,9 +10,10 @@ import Header from "../header/index";
 import {Form,Input,Icon,Button,Checkbox,Select,Table,Modal} from 'antd';
 
 import {onlyNumKeydown} from '@/computes/compute';
-import Img from '@util/components/img';
+import {Img,Loading} from 'wt-reacts';
+import wt from 'wt-butil';
 
-import DefaultImg from '@/util/static/img/add_img.png';
+import DefaultImg from '@/img/add_img.png';
 
 const FormItem = Form.Item;
 const {Option} = Select;

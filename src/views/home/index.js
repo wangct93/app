@@ -13,7 +13,7 @@ import MenuList from './lib/menuList';
 import Box from './lib/box';
 
 import * as actions from '@/store/home/action';
-
+import wt from 'wt-butil';
 const {Search} = Input;
 
 class Home extends Component{

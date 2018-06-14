@@ -6,8 +6,7 @@ import React from 'react';
 import {Provider,connect} from 'react-redux';
 import {HashRouter,withRouter,Route} from 'react-router-dom';
 
-
-import RouterSwitch from '@util/components/routerSwitch';
+import {SwitchRouter} from 'wt-reacts';
 
 import Footer from '../views/footer';
 import Login from '../views/login';
@@ -19,7 +18,8 @@ import {setDefaultPath} from '../computes/compute';
 export default connect(state => ({
     routerData:state.routerData,
     userData:state.userData
-}))(({routerData,userData}) => {
+}))(props => {
+    let {routerData,userData} = props;
     let {list,footerList,defaultPath} = routerData;
     let {info} = userData;
     list = info ? list : [
@@ -31,7 +31,7 @@ export default connect(state => ({
     list = setDefaultPath(list,defaultPath);
     return <HashRouter>
         <React.Fragment>
-            <RouterSwitch data={list} />
+            <SwitchRouter data={list} />
             <FooterView data={footerList}/>
             <Alert />
         </React.Fragment>

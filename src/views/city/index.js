@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-
+import wt from 'wt-butil';
 import Header from '../header';
 
 import * as actions from '@/store/city/action';

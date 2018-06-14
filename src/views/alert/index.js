@@ -7,7 +7,7 @@ import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Modal,Button} from 'antd';
-
+import wt from 'wt-butil';
 import * as actions from '@/store/alert/action';
 
 

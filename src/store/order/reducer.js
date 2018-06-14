@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
+import wt from 'wt-butil';
 let defaultState = {
     list:[
         {"id":1,"shopName":"合宿人家","shopId":1,"list":[{"id":1,"shopId":1,"name":"拿铁","price":180,"intro":"坐下来聊聊天","monthSold":6010,"keywords":"热销","count":2}],"time":"2018-05-25 16:06:21","userId":1,"userName":"admin"}

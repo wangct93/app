@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2018/3/7.
  */
+import wt from 'wt-butil';
 import {dispatch} from '../store';
 import Home from '../../views/home';
 import City from '../../views/city';

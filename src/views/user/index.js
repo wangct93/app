@@ -13,7 +13,7 @@ import * as actions from '@/store/list/action';
 import Header from '../header';
 
 import {getPrice} from '@/computes/compute';
-
+import wt from 'wt-butil';
 const {TabPane} = Tabs;
 
 class UserBox extends Component{

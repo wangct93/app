@@ -13,8 +13,8 @@ const FormItem = Form.Item;
 
 import {alert} from '@/store/alert/action';
 import * as actions from '@/store/user/action';
-import Loading from '@util/components/loading';
-
+import {Img,Loading} from 'wt-reacts';
+import wt from 'wt-butil';
 
 class LoginBox extends Component{
     render(){

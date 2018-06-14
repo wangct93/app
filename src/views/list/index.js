@@ -9,10 +9,10 @@ import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-d
 import {Icon,Button,Input} from 'antd';
 
 import * as actions from '@/store/list/action';
-
+import wt from 'wt-butil';
 import Header from '../header';
-import Loading from '@util/components/loading';
-import Img from '@util/components/img';
+
+import {Img,Loading} from 'wt-reacts';
 
 
 const {Search} = Input;

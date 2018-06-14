@@ -8,11 +8,10 @@ import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import Header from "../header/index";
 import {Form,Input,Icon,Button,Checkbox,Select,Table,Modal} from 'antd';
-
+import wt from 'wt-butil';
 import {onlyNumKeydown} from '@/computes/compute';
-import Img from '@util/components/img';
+import {Img,Loading} from 'wt-reacts';
 import FoodForm,{FileUpload} from './inputFood';
-import Loading from '@util/components/loading';
 
 import * as actions from '@/store/input/action';
 

@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 import ReactDOM,{render} from 'react-dom';
 import store from './store/store';
 import {Provider} from 'react-redux';
-
+import './config/config';
 import RouterIndex from './routers';
 
 

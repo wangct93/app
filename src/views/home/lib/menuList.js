@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon} from 'antd';
-
+import wt from 'wt-butil';
 export default ({data,click}) => {
     return <ul className="menu-list">
         {
