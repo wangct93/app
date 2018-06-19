@@ -20,7 +20,7 @@ class Home extends Component{
     render(){
         let {homeData,cityData} = this.props;
         let {cityName} = cityData;
-        let {menuData = [],czyhData = []} = homeData;
+        let {menuData = [],zanData = []} = homeData;
         if(!cityName){
             return <Redirect to="/city"/>
         }
@@ -40,7 +40,7 @@ class Home extends Component{
             <div className="body">
                 <MenuBox click={this.click.bind(this)} data={menuData}/>
                 <div className="mgb25" />
-                <Box title="测试标题" data={czyhData} />
+                <Box title="测试标题" data={zanData} />
             </div>
         </div>
     }

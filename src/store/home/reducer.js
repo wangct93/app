@@ -3,6 +3,7 @@
  */
 import {dispatch} from '../store';
 import wt from 'wt-butil';
+import {ShopData} from '@/data';
 let defaultState = {
     menuData:[
         [
@@ -162,38 +163,7 @@ let defaultState = {
             }
         ]
     ],
-    czyhData:[
-        {
-            title:'单独撒a',
-            intro:'是经典款',
-            src:'img/1.jpg'
-        },
-        {
-            title:'单独撒a',
-            intro:'是经典款',
-            src:'img/1.jpg'
-        },
-        {
-            title:'单独撒a',
-            intro:'是经典款',
-            src:'img/1.jpg'
-        },
-        {
-            title:'单独撒a',
-            intro:'是经典款',
-            src:'img/1.jpg'
-        },
-        {
-            title:'单独撒a',
-            intro:'是经典款',
-            src:'img/1.jpg'
-        },
-        {
-            title:'单独撒a',
-            intro:'是经典款',
-            src:'img/1.jpg'
-        }
-    ]
+    zanData:ShopData.slice(0,6)
 };
 
 export let homeData = (state = defaultState,action = {}) => {

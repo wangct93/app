@@ -15,8 +15,9 @@ export default class Box extends Component{
             <div className="box-body">
                 <ul className="box-ul">
                     {
-                        data.map(({title,intro,src,path},i) => {
-                            return <li key={i}>
+                        data.map((item,i) => {
+                            let {title,intro,src,path} = item;
+                            return <li key={i} onClick={this.toShop.bind(this,item)}>
                                 <Img src={src} />
                                 <p className="box-item-title">{title}</p>
                                 <p className="box-item-text">{intro}</p>
@@ -26,5 +27,8 @@ export default class Box extends Component{
                 </ul>
             </div>
         </div>
+    }
+    toShop(data){
+        location.hash = '/shop/' + data.id;
     }
 }

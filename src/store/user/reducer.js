@@ -71,5 +71,15 @@ let reducer = {
     loginEnd(state,{data}){
         state.loadingLogin = false;
         state.info = data;
+    },
+    editUserInfo(state,action){
+        let {data} = action;
+        wt.extend(state.info,data);
+        setTimeout(() => {
+            dispatch({
+                type:'alert',
+                message:'修改地址成功'
+            });
+        },300);
     }
 };

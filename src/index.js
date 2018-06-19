@@ -8,11 +8,11 @@ import RouterIndex from './routers';
 
 
 
-/**
- * 注册服务器，加快编译速度
- */
-import registerServiceWorker from './registerServiceWorker';
-registerServiceWorker();
+// /**
+//  * 注册服务器，加快编译速度
+//  */
+// import registerServiceWorker from './registerServiceWorker';
+// registerServiceWorker();
 
 
 render(<Provider store={store}>
